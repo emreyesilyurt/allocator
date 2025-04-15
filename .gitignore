@@ -40,3 +40,8 @@ pids
 
 # System Files
 *.pem
+
+
+
+.venv
+
