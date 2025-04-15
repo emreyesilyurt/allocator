@@ -1,0 +1,42 @@
+# OS-Specific
+.DS_Store
+Thumbs.db
+
+# macOS & Linux
+._*
+.Spotlight-V100
+.Trashes
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime
+node_modules/
+.next/
+out/
+dist/
+.cache/
+tmp/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Editor folders
+.idea/
+.vscode/
+*.swp
+
+# PM2 logs
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# System Files
+*.pem
