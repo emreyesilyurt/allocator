@@ -1,20 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import { Hexagon } from 'react-feather';
-import {TbSitemap,TbCameraPlus} from 'react-icons/tb'
+import {TbSitemap,TbCameraPlus, TbBrandSpeedtest} from 'react-icons/tb'
 import {LuLayers} from 'react-icons/lu'
 
 export default function Feature() {
   return (
     <div className="container">
       <div className="grid grid-cols-1 text-center">
-        <h3 className="mb-4 md:text-3xl text-2xl md:leading-snug leading-snug font-semibold">
-          Giglink is a web3 destination.
-        </h3>
+        {/*<h3 className="mb-4 md:text-3xl text-2xl md:leading-snug leading-snug font-semibold">
+          How Allocator Works
+        </h3>*/}
 
         <p className="text-slate-400 max-w-xl mx-auto">
-          We are a huge marketplace dedicated to connecting great artists of all
-          Giglink with their fans and unique token collectors!
+        From asset input to strategy-backed recommendations — here’s how you optimize smarter.
         </p>
       </div>
 
@@ -24,7 +23,7 @@ export default function Feature() {
             <Hexagon className="size-28 fill-violet-600/5 mx-auto rotate-[30deg]"></Hexagon>
             {/* <Hexagon className="size-28 fill-violet-600/5 mx-auto rotate-[30deg]"></Hexagon> */}
             <div className="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-violet-600 rounded-xl transition duration-500 ease-in-out text-3xl flex align-middle justify-center items-center">
-               <TbSitemap/>
+               <TbBrandSpeedtest/>
             </div>
           </div>
 
@@ -33,11 +32,10 @@ export default function Feature() {
               href="#"
               className="text-lg h5 font-semibold transition duration-500 ease-in-out hover:text-violet-600"
             >
-              Create Item
+              Choose Your Risk Profile
             </Link>
             <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-              If the distribution of letters and words is random, the reader
-              will not be distracted from making.
+            Select from Conservative, Balanced, or Aggressive to match your investment strategy.
             </p>
           </div>
         </div>
@@ -54,11 +52,10 @@ export default function Feature() {
               href="#"
               className="text-lg h5 font-semibold transition duration-500 ease-in-out hover:text-violet-600"
             >
-              Collect
+              Input Your Holdings
             </Link>
             <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-              If the distribution of letters and words is random, the reader
-              will not be distracted from making.
+            Manually enter your current crypto asset allocations — no login or wallet needed.
             </p>
           </div>
         </div>
@@ -66,7 +63,7 @@ export default function Feature() {
           <div className="relative overflow-hidden text-transparent -m-3">
             <Hexagon className="size-28 fill-violet-600/5 mx-auto rotate-[30deg]"></Hexagon>
             <div className="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-violet-600 rounded-xl transition duration-500 ease-in-out text-3xl flex align-middle justify-center items-center">
-                <TbCameraPlus/>
+                <TbSitemap/>
             </div>
           </div>
 
@@ -75,11 +72,10 @@ export default function Feature() {
               href="#"
               className="text-lg h5 font-semibold transition duration-500 ease-in-out hover:text-violet-600"
             >
-              Sell Item
+              Optimize and Compare
             </Link>
             <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-              If the distribution of letters and words is random, the reader
-              will not be distracted from making.
+            Instantly see a recommended portfolio and compare it with your current allocations — all visualized. 
             </p>
           </div>
         </div>

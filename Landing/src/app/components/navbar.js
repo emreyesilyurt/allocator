@@ -295,19 +295,8 @@ export default function Navbar() {
                     <div id="navigation" className={`${isOpen === true ? 'hidden' : 'block'}`}>
                         <ul className="navigation-menu justify-end">
                             <li className="has-submenu parent-menu-item">
-                                <Link href="#">Home</Link><span className="menu-arrow"></span>
-                                <ul className="submenu">
-                                    <li><Link href="/" className="sub-menu-item">Home One</Link></li>
-                                    <li><Link href="/index-two" className="sub-menu-item">Home Two</Link></li>
-                                    <li><Link href="/index-three" className="sub-menu-item">Home Three</Link></li>
-                                    <li><Link href="/index-four" className="sub-menu-item">Home Four <span className="bg-gray-50 dark:bg-slate-800 text-[10px] shadow shadow-gray-300 dark:shadow-gray-700 font-bold px-2.5 py-0.5 rounded h-5 ms-1">Light</span></Link></li>
-                                    <li><Link href="/index-five" className="sub-menu-item">Home Five <span className="bg-gray-50 dark:bg-slate-800 text-[10px] shadow shadow-gray-300 dark:shadow-gray-700 font-bold px-2.5 py-0.5 rounded h-5 ms-1">Light</span></Link></li>
-                                    <li><Link href="/index-six" className="sub-menu-item">Home Six <span className="bg-gray-50 dark:bg-slate-800 text-[10px] shadow shadow-gray-300 dark:shadow-gray-700 font-bold px-2.5 py-0.5 rounded h-5 ms-1">Light</span></Link></li>
-                                    <li><Link href="/index-seven" className="sub-menu-item">Home Seven </Link></li>
-                                    <li><Link href="/index-eight" className="sub-menu-item">Home Eight <span className="bg-gray-50 dark:bg-slate-800 text-[10px] shadow shadow-gray-300 dark:shadow-gray-700 font-bold px-2.5 py-0.5 rounded h-5 ms-1">Light</span></Link></li>
-                                    <li><Link href="/index-nine" className="sub-menu-item">Home Nine </Link></li>
-                                    <li><Link href="/index-ten" className="sub-menu-item">Home Ten <span className="bg-gray-50 dark:bg-slate-800 text-[10px] shadow shadow-gray-300 dark:shadow-gray-700 font-bold px-2.5 py-0.5 rounded h-5 ms-1">Light</span></Link></li>
-                                </ul>
+                                <Link href="#">Home</Link><span className="sub-menu-item"></span>
+
                             </li>
 
                             <li className="has-submenu parent-parent-menu-item">
