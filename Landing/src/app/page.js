@@ -176,7 +176,6 @@ export default function IndexFive() {
                 <GetTouch />
             </section>
             <Footer />
-            <Switcher />
         </>
     )
 }

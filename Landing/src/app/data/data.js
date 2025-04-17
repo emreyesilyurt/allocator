@@ -420,7 +420,7 @@ export  const walletData = [
 export const blogData = [
   {
       id:1,
-      title: 'Mindfulness Activities for Kids & Toddlers with NFT',
+      title: 'Rebalancing Crypto Portfolios with Generative AI',
       image: '/images/blog/01.jpg',
       categoty: 'Arts',
       subtext: '@StreetBoy',
@@ -428,7 +428,7 @@ export const blogData = [
   },
   {
       id:2,
-      title: 'Save Thousands Of Lives Through This NFT',
+      title: 'Turning Crypto Holdings into Strategy-Aligned Assets',
       image: '/images/blog/03.jpg',
       categoty: 'Illustration',
       subtext: '@CutieGirl',
@@ -436,7 +436,7 @@ export const blogData = [
   },
   {
       id:3,
-      title: 'A place where technology meets craftsmanship',
+      title: 'A Smarter Way to Manage Risk in Crypto Investing',
       image: '/images/blog/04.jpg',
       categoty: 'Music',
       subtext: '@ButterFly',

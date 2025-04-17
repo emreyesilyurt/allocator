@@ -12,9 +12,9 @@ export default function Feature() {
           How Allocator Works
         </h3>*/}
 
-        <p className="text-slate-400 max-w-xl mx-auto">
+        {/*<p className="text-slate-400 max-w-xl mx-auto">
         From asset input to strategy-backed recommendations — here’s how you optimize smarter.
-        </p>
+        </p>*/}
       </div>
 
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-10 gap-[30px]">

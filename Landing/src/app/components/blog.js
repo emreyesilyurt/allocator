@@ -22,9 +22,7 @@ export default function blog() {
                         <Image src={item.image} alt="" placeholder='blur' blurDataURL={item.image} width={0} height={0} sizes='100vw' style={{width:"100%", height:'auto'}}  />
     
                         <div className="relative p-6">
-                            <div className="absolute start-6 -top-4">
-                                <span className="bg-violet-600 text-white text-[12px] px-2.5 py-1 font-semibold rounded-full h-5">{item.categoty}</span>
-                            </div>
+                            
     
                             <div className="">
                                 <div className="flex mb-4">
@@ -36,7 +34,6 @@ export default function blog() {
     
                                 <div className="flex justify-between mt-4">
                                     <Link href={`/blog-detail/${item.id}`} className="btn btn-link text-[16px] font-medium hover:text-violet-600 after:bg-violet-600 duration-500 ease-in-out flex items-center"> <span>Read More</span> <MdOutlineArrowForward className='text-sm ms-1'/></Link>
-                                    <span className="text-slate-400 text-[16px]">by <Link href={`/creator-profile/${item.id}`} className="text-slate-900 dark:text-white hover:text-violet-600 dark:hover:text-violet-600 font-medium">{item.subtext}</Link></span>
                                 </div>
                             </div>
                         </div>

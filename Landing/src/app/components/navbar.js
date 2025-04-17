@@ -234,7 +234,7 @@ export default function Navbar() {
                     </div>
 
                     {/* <!--Login button Start--> */}
-                    <ul className="buy-button list-none mb-0">
+                    {/*<ul className="buy-button list-none mb-0">
 
                         <li className="inline-block mb-0">
                             <div className="form-icon relative">
@@ -290,7 +290,7 @@ export default function Navbar() {
                                 </ul>
                             </div>
                         </li>
-                    </ul>
+                    </ul>*/}
 
                     <div id="navigation" className={`${isOpen === true ? 'hidden' : 'block'}`}>
                         <ul className="navigation-menu justify-end">
@@ -299,7 +299,7 @@ export default function Navbar() {
 
                             </li>
 
-                            <li className="has-submenu parent-parent-menu-item">
+                            {/*<li className="has-submenu parent-parent-menu-item">
                                 <Link href="#">Explore</Link><span className="menu-arrow"></span>
                                 <ul className="submenu">
                                     <li><Link href="/explore-one" className="sub-menu-item"> Explore One</Link></li>
@@ -311,11 +311,14 @@ export default function Navbar() {
                                     <li><Link href="/collections" className="sub-menu-item">Collections</Link></li>
                                     <li><Link href="/upload-work" className="sub-menu-item">Upload Works</Link></li>
                                 </ul>
-                            </li>
+                            </li>*/}
 
-                            <li><Link href="/wallet" className="sub-menu-item">Wallet</Link></li>
+                            {/*<li><Link href="/wallet" className="sub-menu-item">Wallet</Link></li>*/}
+                            <li><Link href="/aboutus" className="sub-menu-item">About Us</Link></li>
+                            <li><Link href="/wallet" className="sub-menu-item">Explore</Link></li>
 
-                            <li className="has-submenu parent-parent-menu-item">
+                            
+                            {/*<li className="has-submenu parent-parent-menu-item">
                                 <Link href="#">Pages</Link><span className="menu-arrow"></span>
                                 <ul className="submenu">
                                     <li><Link href="/aboutus" className="sub-menu-item">About Us</Link></li>
@@ -360,9 +363,10 @@ export default function Navbar() {
                                     <li><Link href="/terms" className="sub-menu-item">Terms Policy</Link></li>
                                     <li><Link href="/privacy" className="sub-menu-item">Privacy Policy</Link></li>
                                 </ul>
-                            </li>
+                            </li>*/}
 
                             <li><Link href="/contact" className="sub-menu-item">Contact</Link></li>
+                            <li><Link href="/login" className="sub-menu-item">Login</Link></li>
                         </ul>
                     </div>
                 </div>
