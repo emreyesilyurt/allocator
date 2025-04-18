@@ -11,7 +11,7 @@ import ModalVideo from 'react-modal-video'
 import "../../../node_modules/react-modal-video/scss/modal-video.scss";
 
 const Navbar = dynamic(()=>import('../components/navbar'));
-const Footer = dynamic(()=>import('../components/footer'));
+const Footer = dynamic(()=>import('../components/footer-light'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 const Blog = dynamic(()=>import('../components/blog'));
 const Team = dynamic(()=>import('../components/team'));

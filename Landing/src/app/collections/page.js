@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 
 const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer'));
+const Footer = dynamic(()=>import('../components/footer-light'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 const CollectionTwo = dynamic(()=>import('../components/collection-two'));
 

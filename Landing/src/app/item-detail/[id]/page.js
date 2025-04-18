@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Navbar = dynamic(()=>import('../../components/navbar'));
-const Footer = dynamic(()=>import('../../components/footer'));
+const Footer = dynamic(()=>import('../../components/footer-light'));
 const Switcher = dynamic(()=>import('../../components/switcher'));
 import { ExploreItems } from "../../data/data";
 import {BsExclamationOctagon } from "react-icons/bs"

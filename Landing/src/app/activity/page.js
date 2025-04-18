@@ -14,7 +14,7 @@ import {PiWalletBold, PiFireSimpleBold, PiBrowsersLight,PiMusicNotesBold} from '
 import {activityData} from "../data/data";
 
 const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer'));
+const Footer = dynamic(()=>import('../components/footer-light'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 
 export default function Activity(){

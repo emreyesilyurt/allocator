@@ -9,7 +9,7 @@ import { FaRegEnvelope } from 'react-icons/fa'
 import { BsTelephone } from "react-icons/bs"
 
 const Navbar = dynamic(() => import('../components/navbar'));
-const Footer = dynamic(() => import('../components/footer'));
+const Footer = dynamic(() => import('../components/footer-light'));
 const Switcher = dynamic(() => import('../components/switcher'));
 
 export default function Terms() {

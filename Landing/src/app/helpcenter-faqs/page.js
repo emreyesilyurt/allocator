@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Link as Link2 } from 'react-scroll';
 
 const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer'));
+const Footer = dynamic(()=>import('../components/footer-light'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 
 import { accordionData } from "../data/data";

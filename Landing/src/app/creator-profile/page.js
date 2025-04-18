@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Navbar = dynamic(()=>import('../components/navbar'));
-const Footer = dynamic(()=>import('../components/footer'));
+const Footer = dynamic(()=>import('../components/footer-light'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 const DiscoverItems = dynamic(()=>import('../components/discover-items'));
 import {ExploreItems} from '../data/data'

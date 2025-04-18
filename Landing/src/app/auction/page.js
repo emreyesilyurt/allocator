@@ -6,7 +6,7 @@ import Link from "next/link";
 import {auctionLive} from "../data/data";
 
 const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer'));
+const Footer = dynamic(()=>import('../components/footer-light'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 const AuctionsTwo = dynamic(()=>import('../components/auctions-two'));
 
