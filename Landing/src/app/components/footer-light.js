@@ -8,7 +8,7 @@ import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import { BsPencil } from "react-icons/bs"
 
-export default function Footer() {
+export default function FooterLight() {
     return (
         <footer className="footer bg-white text-gray-700 mt-24">
             <div className="container">
