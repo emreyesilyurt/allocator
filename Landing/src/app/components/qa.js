@@ -3,21 +3,25 @@ import React, { useState } from 'react'
 export default function QA() {
     const accordionData = [
         {
-            title: 'How does it work ?',
-            content: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.'
+            title: 'How does Allocator.app optimize my crypto portfolio?',
+            content: 'Allocator.app uses AI-driven algorithms to analyze your risk profile and current holdings. It then suggests an optimized asset allocation strategy to maximize long-term performance and stability.'
         },
         {
-            title: 'Do I need a designer to use Giglink ?',
-            content: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.'
+            title: 'Do I need prior investing experience to use Allocator?',
+            content: 'Not at all. Allocator is built for both beginners and experienced investors. The interface is simple, and our AI recommendations are explained in a clear, actionable way.'
         },
         {
-            title: 'What do I need to do to start selling ?',
-            content: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.'
+            title: 'How does the risk profiling work?',
+            content: 'During setup, you’ll answer a few questions to determine your risk appetite: Conservative, Balanced, or Aggressive. Based on your profile, the AI tailors its suggestions accordingly.'
         },
         {
-            title: 'What happens when I receive an order ?',
-            content: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.'
+            title: 'Can I manually adjust the recommended portfolio?',
+            content: 'Yes, Allocator gives you full control. You can tweak or rebalance the suggestions, and the system will provide insights into how those changes affect your risk and diversification.'
         },
+        {
+            title: 'Is my wallet data secure?',
+            content: 'Absolutely. Allocator only stores essential, anonymized data and uses encryption protocols to keep your information safe. Wallet integration is optional and handled through secure APIs.'
+        }
     ]
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -33,7 +37,7 @@ export default function QA() {
             <div className="grid grid-cols-1 text-center">
                 <h3 className="mb-4 md:text-3xl text-2xl md:leading-snug leading-snug font-semibold">Q&A</h3>
 
-                <p className="text-slate-400 max-w-xl mx-auto">We are a huge marketplace dedicated to connecting great artists of all Giglink with their fans and unique token collectors!</p>
+                <p className="text-slate-400 max-w-xl mx-auto"></p>
             </div>
 
             <div className="flex justify-center mt-10">
