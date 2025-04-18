@@ -4,54 +4,53 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from 'next/image';
 
-import { FiMapPin} from "react-icons/fi"
-import {FaRegEnvelope} from 'react-icons/fa'
-import {BsTelephone} from "react-icons/bs"
+import { FiMapPin } from "react-icons/fi"
+import { FaRegEnvelope } from 'react-icons/fa'
+import { BsTelephone } from "react-icons/bs"
 
-const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer'));
-const Switcher = dynamic(()=>import('../components/switcher'));
+const Navbar = dynamic(() => import('../components/navbar'));
+const Footer = dynamic(() => import('../components/footer'));
+const Switcher = dynamic(() => import('../components/switcher'));
 
-export default function Terms(){
+export default function Terms() {
     useEffect(() => {
-        document.documentElement.classList.add("dark");
+        document.documentElement.classList.add("light");
         document.body.classList.add(
-          "font-urbanist",
-          "text-base",
-          "text-black",
-          "dark:text-white",
-          "dark:bg-slate-900"
+            "font-urbanist",
+            "text-base",
+            "text-black",
+            "dark:text-white",
+            "dark:bg-slate-900"
         );
-      }, []);
-      const contactData = [
+    }, []);
+    const contactData = [
         {
-            title:'Phone',
-            description:'The phrasal sequence of the is now so that many campaign and benefit',
+            title: 'Phone',
+            description: 'We’re available for questions, feedback, or collaboration ideas during business hours.',
             Icon: FaRegEnvelope,
-            contact:'+152 534-468-854'
+            contact: '+152 534-468-854'
         },
         {
-            title:'Email',
-            description:'The phrasal sequence of the is now so that many campaign and benefit',
+            title: 'Email',
+            description: 'Feel free to message us for support or product inquiries, we typically reply within 1 day.',
             Icon: BsTelephone,
-            contact:'contact@example.com'
+            contact: 'support@allocator.app'
         },
         {
-            title:'Location',
-            description:'The phrasal sequence of the is now so that many campaign and benefit',
+            title: 'Location',
+            description: 'We operate remotely, but you can find us working hard (and sipping coffee) at our HQ.',
             Icon: FiMapPin,
-            contact:'View on Google map'
+            contact: 'View on Google map'
         }
-      ]
-    return(
+    ]
+    return (
         <>
-        <NavbarLight/>
-        <section className="relative table w-full py-36  bg-bottom bg-no-repeat" style={{backgroundImage:"url('/images/bg/bg1.jpg')"}}>
+            <Navbar />
+            <section className="relative table w-full py-36  bg-bottom bg-no-repeat" style={{ backgroundImage: "url('/images/bg/bg1.jpg')" }}>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900"></div>
                 <div className="container">
                     <div className="grid grid-cols-1 pb-8 text-center mt-10">
                         <h3 className="md:text-3xl text-2xl md:leading-snug tracking-wide leading-snug font-medium text-white">Contact Us</h3>
-
                     </div>
                 </div>
 
@@ -72,34 +71,34 @@ export default function Terms(){
             <section className="relative md:py-24 py-16">
                 <div className="container">
                     <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-[30px]">
-                        {contactData.map((item,index)=>{
+                        {contactData.map((item, index) => {
                             const Icon = item.Icon
-                            return(
+                            return (
 
-                              <div className="text-center px-6 mt-6" key={index}>
-                              <div className="size-20 bg-violet-600/5 text-violet-600 rounded-full text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800 mx-auto">
-                                  <Icon className='text-xxl'/>
-                              </div>
-  
-                              <div className="content mt-7">
-                                  <h5 className="title text-xl font-semibold">{item.title}</h5>
-                                  <p className="text-slate-400 mt-3">{item.description}</p>
-  
-                                  <div className="mt-5">
-                                      <Link href="tel:+152534-468-854" className="btn btn-link text-violet-600 hover:text-violet-600 after:bg-violet-600 duration-500 ease-in-out">{item.contact}</Link>
-                                  </div>
-                              </div>
-                          </div>
+                                <div className="text-center px-1 mt-6" key={index}>
+                                    <div className="size-20 bg-violet-600/5 text-violet-600 rounded-full text-3xl flex align-middle justify-center items-center shadow-sm dark:shadow-gray-800 mx-auto">
+                                        <Icon className='text-xxl' />
+                                    </div>
+
+                                    <div className="content mt-7">
+                                        <h5 className="title text-xl font-semibold">{item.title}</h5>
+                                        <p className="text-slate-400 mt-3">{item.description}</p>
+
+                                        <div className="mt-5">
+                                            <Link href="tel:+152534-468-854" className="btn btn-link text-violet-600 hover:text-violet-600 after:bg-violet-600 duration-500 ease-in-out">{item.contact}</Link>
+                                        </div>
+                                    </div>
+                                </div>
                             )
                         })}
-                       
+
                     </div>
                 </div>
 
                 <div className="container md:mt-24 mt-16">
                     <div className="grid md:grid-cols-12 grid-cols-1 items-center gap-[30px]">
                         <div className="lg:col-span-7 md:col-span-6 order-1 md:order-2">
-                            <Image src="/images/contact.svg" alt="" placeholder='blur' blurDataURL='/images/contact.svg' width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}} />
+                            <Image src="/images/contact.svg" alt="" placeholder='blur' blurDataURL='/images/contact.svg' width={0} height={0} sizes="100vw" style={{ width: "100%", height: "auto" }} />
                         </div>
 
                         <div className="lg:col-span-5 md:col-span-6 mt-8 md:mt-0 order-2 md:order-1">
@@ -153,12 +152,12 @@ export default function Terms(){
             <div className="container-fluid relative">
                 <div className="grid grid-cols-1">
                     <div className="w-full leading-[0] border-0">
-                        <iframe title="iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39206.002432144705!2d-95.4973981212445!3d29.709510002925988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c16de81f3ca5%3A0xf43e0b60ae539ac9!2sGerald+D.+Hines+Waterwall+Park!5e0!3m2!1sen!2sin!4v1566305861440!5m2!1sen!2sin" style={{ border: 0 }} className="w-full h-[500px]" allowFullScreen></iframe>
+                        <iframe title="iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3124.9865479822734!2d27.169254376030437!3d38.44177967345888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd9c76c7830ff%3A0x7b559b8669fecbed!2sWithco%20Coworking!5e0!3m2!1sen!2sus!4v1744935601739!5m2!1sen!2sus" style={{ border: 0 }} className="w-full h-[500px]" allowFullScreen></iframe>
                     </div>
                 </div>
             </div>
-        <Footer/>
-        <Switcher/>
+            <Footer />
+            <Switcher />
         </>
     )
 }

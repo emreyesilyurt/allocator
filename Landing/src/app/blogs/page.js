@@ -7,7 +7,7 @@ import Image from "next/image";
 import {LuClock, LuCalendarDays} from "react-icons/lu"
 import {MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlineArrowForward,} from "react-icons/md"
 
-const NavbarLight = dynamic(()=>import('../components/navbar-light'));
+const Navbar = dynamic(()=>import('../components/navbar'));
 const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 import { blogData } from "../data/data";
@@ -25,7 +25,7 @@ export default function Blogs(){
       }, []);
     return(
         <>
-        <NavbarLight/>
+        <Navbar/>
         <section className="relative table w-full py-36  bg-bottom bg-no-repeat" style={{backgroundImage:"url('/images/bg/bg1.jpg')"}}>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900"></div>
                 <div className="container">

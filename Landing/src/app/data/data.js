@@ -424,7 +424,7 @@ export const blogData = [
       image: '/images/blog/01.jpg',
       categoty: 'Arts',
       subtext: '@StreetBoy',
-      date:'13th September, 2025'
+      date:'Sep 13, 2025'
   },
   {
       id:2,
@@ -432,7 +432,7 @@ export const blogData = [
       image: '/images/blog/03.jpg',
       categoty: 'Illustration',
       subtext: '@CutieGirl',
-      date:'29th November, 2025'
+      date:'Nov 29, 2025'
   },
   {
       id:3,
@@ -440,7 +440,7 @@ export const blogData = [
       image: '/images/blog/04.jpg',
       categoty: 'Music',
       subtext: '@ButterFly',
-      date:'29th December, 2025'
+      date:'Dec 29, 2025'
   },
   {
       id:4,
@@ -448,7 +448,7 @@ export const blogData = [
       image: '/images/blog/05.jpg',
       categoty: 'Video',
       subtext: '@NorseQueen',
-      date:'13th March, 2025',
+      date:'13th Mar, 2025',
   },
   {
       id:5,
@@ -465,7 +465,7 @@ export const blogData = [
       image: '/images/blog/07.jpg',
       categoty: 'Memes',
       subtext: '@Angel',
-      date:'19th June, 2025',
+      date:'19th Jun, 2025',
   },
   {
       id:7,
@@ -473,7 +473,7 @@ export const blogData = [
       image: '/images/blog/08.jpg',
       categoty: 'GIFs',
       subtext: '@CrazyAnyone',
-      date:'20th June, 2025',
+      date:'20th Jun, 2025',
   },
   {
       id:8,
@@ -481,7 +481,7 @@ export const blogData = [
       image: '/images/blog/09.jpg',
       categoty: 'Video',
       subtext: '@Princess',
-      date:'31st August, 2025',
+      date:'31st Aug, 2025',
   },
   {
       id:9,
@@ -489,7 +489,7 @@ export const blogData = [
       image: '/images/blog/10.jpg',
       categoty: 'GIFs',
       subtext: '@CrazyAnyone',
-      date:'1st september, 2025',
+      date:'1st Sep, 2025',
   },
   {
       id:10,
@@ -497,7 +497,7 @@ export const blogData = [
       image: '/images/blog/11.jpg',
       categoty: 'Tech',
       subtext: '@Princess',
-      date:'1st september, 2025',
+      date:'1st Sep, 2025',
   },
   {
       id:11,
@@ -505,7 +505,7 @@ export const blogData = [
       image: '/images/blog/12.jpg',
       categoty: 'Arts',
       subtext: '@PandaOne',
-      date:'1st september, 2025',
+      date:'1st Sep, 2025',
   },
   {
       id:12,
@@ -513,7 +513,7 @@ export const blogData = [
       image: '/images/blog/02.jpg',
       categoty: 'GIFs',
       subtext: '@FunnyGuy',
-      date:'1st september, 2025',
+      date:'1st Sep, 2025',
   }
 ]
 export const accordionData = [
