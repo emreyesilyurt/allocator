@@ -10,7 +10,7 @@ export default function GetTouch() {
             <div className="grid grid-cols-1 text-center">
                 <h3 className="mb-4 md:text-3xl text-2xl md:leading-snug leading-snug font-semibold">Have Question ? Get in touch!</h3>
 
-                <p className="text-slate-400 max-w-xl mx-auto">We are a huge marketplace dedicated to connecting great artists of all Giglink with their fans and unique token collectors!</p>
+                <p className="text-slate-400 max-w-xl mx-auto">Allocator is your AI-powered partner for smart crypto investing. We’re here to support your journey to optimized portfolio management.</p>
 
                 <div className="mt-6">
                     <Link href="/helpcenter-support" className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full me-2 mt-2 inline-flex text-center items-center"><BsTelephone className='me-1'/>  <span className='ms-1'>Contact us</span> </Link>
