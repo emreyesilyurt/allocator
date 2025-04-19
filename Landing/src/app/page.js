@@ -26,6 +26,15 @@ export default function IndexFive() {
     useEffect(() => {
         document.documentElement.classList.add('light');
         document.documentElement.classList.remove('dark');
+    
+        // Apply fullscreen-safe resets
+        document.documentElement.style.margin = '0';
+        document.documentElement.style.padding = '0';
+        document.documentElement.style.overflowX = 'hidden';
+        document.body.style.margin = '0';
+        document.body.style.padding = '0';
+        document.body.style.overflowX = 'hidden';
+    
         document.body.classList.add(
             "font-urbanist",
             "text-base",
@@ -33,8 +42,8 @@ export default function IndexFive() {
             "dark:text-white",
             "dark:bg-slate-900"
         );
-
     }, []);
+    
     const settings = {
         items: 1,
         controls: true,
@@ -87,7 +96,7 @@ export default function IndexFive() {
     return (
         <>
             <Navbar />
-            <section className="relative md:pt-48 pt-36 overflow-hidden">
+            {/*<section className="relative md:pt-48 pt-36 overflow-hidden">
                 <div className="container">
                     <div className="grid grid-cols-1 justify-center text-center mt-10">
                         <div className="relative">
@@ -113,7 +122,48 @@ export default function IndexFive() {
                     </div>
                 </div>
 
+            </section>*/}
+
+            <section className="relative w-screen h-screen overflow-hidden m-0 p-0">
+                {/* Background video */}
+                <div className="absolute inset-0 z-0 pointer-events-none">
+                    <iframe
+                        title="background-video"
+                        src="https://player.vimeo.com/video/502163294?background=1&autoplay=1&loop=1&byline=0&title=0"
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[100vw] min-h-[100vh]"
+                        frameBorder="0"
+                        allow="autoplay; fullscreen"
+                        allowFullScreen
+                    ></iframe>
+                </div>
+
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900 z-10"></div>
+
+                {/* Content centered */}
+                <div className="relative z-20 flex flex-col items-center justify-center w-full h-full text-center px-4">
+                    <h1 className="font-bold text-4xl lg:text-6xl text-white leading-tight lg:leading-snug">
+                        The way to Find <br />
+                        any <span className="bg-gradient-to-l from-red-600 to-violet-600 text-transparent bg-clip-text">Digital</span> Content
+                    </h1>
+                    <p className="text-white/70 text-lg max-w-xl mt-6">
+                        We are a huge marketplace dedicated to connecting great artists of all Giglink with their fans and unique token collectors!
+                    </p>
+                    <div className="mt-8">
+                        <Link
+                            href="/explore-one"
+                            className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full px-6 py-2"
+                        >
+                            Explore now
+                        </Link>
+                    </div>
+                </div>
             </section>
+
+
+
+
+
             <section className="relative md:py-24 py-16">
                 {/*<CreatorThree title="Best Creators & Sellers of" description="Best sellers of the week's NFTs" />*/}
                 <div className=" md:pt-24 pt-16">
