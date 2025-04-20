@@ -15,8 +15,10 @@ const Creator = dynamic(() => import('./components/creator'));
 const Blog = dynamic(() => import('./components/blog'));
 const GetTouch = dynamic(() => import('./components/get-touch'));
 const WhoItsFor = dynamic(() => import('./components/who-its-for'));
+const HeadLine = dynamic(() => import('./components/headline'));
 
 import { walletData } from './data/data';
+import DashboardDemoVideo from './components/demo-video'
 
 
 const TinySlider = dynamic(() => import("tiny-slider-react"), { ssr: false });
@@ -26,15 +28,36 @@ export default function IndexFive() {
     useEffect(() => {
         document.documentElement.classList.add('light');
         document.documentElement.classList.remove('dark');
-    
-        // Apply fullscreen-safe resets
+
+        // Force full viewport coverage
         document.documentElement.style.margin = '0';
         document.documentElement.style.padding = '0';
-        document.documentElement.style.overflowX = 'hidden';
+        document.documentElement.style.width = '100%';
+        document.documentElement.style.height = '100%';
+        document.documentElement.style.overflow = 'hidden scroll'; // Allow vertical scroll only
+        document.documentElement.style.boxSizing = 'border-box';
+
         document.body.style.margin = '0';
         document.body.style.padding = '0';
-        document.body.style.overflowX = 'hidden';
-    
+        document.body.style.width = '100%';
+        document.body.style.height = '100%';
+        document.body.style.overflow = 'visible';
+        document.body.style.boxSizing = 'border-box';
+
+        // Add viewport meta tag programmatically if not present
+        const viewportMeta = document.querySelector('meta[name="viewport"]');
+        if (!viewportMeta) {
+            const meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+            document.head.appendChild(meta);
+        } else {
+            // Update existing viewport meta to include viewport-fit=cover
+            if (!viewportMeta.content.includes('viewport-fit=cover')) {
+                viewportMeta.content += ', viewport-fit=cover';
+            }
+        }
+
         document.body.classList.add(
             "font-urbanist",
             "text-base",
@@ -43,7 +66,6 @@ export default function IndexFive() {
             "dark:bg-slate-900"
         );
     }, []);
-    
     const settings = {
         items: 1,
         controls: true,
@@ -124,13 +146,27 @@ export default function IndexFive() {
 
             </section>*/}
 
-            <section className="relative w-screen h-screen overflow-hidden m-0 p-0">
-                {/* Background video */}
-                <div className="absolute inset-0 z-0 pointer-events-none">
+
+
+            <section className="relative w-full h-screen overflow-hidden">
+                {/* Video container specific to hero section */}
+                <div className="absolute inset-0 overflow-hidden">
                     <iframe
                         title="background-video"
-                        src="https://player.vimeo.com/video/502163294?background=1&autoplay=1&loop=1&byline=0&title=0"
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[100vw] min-h-[100vh]"
+                        src="https://player.vimeo.com/video/502163294?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1&quality=auto&responsive=1"
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%) scale(1.05)', // Slightly enlarged to avoid gaps
+                            width: 'auto',
+                            height: 'auto',
+                            minWidth: '100%',
+                            minHeight: '100%',
+                            aspectRatio: '16/9', // Modern browsers support this
+                            objectFit: 'cover',
+                            border: 'none'
+                        }}
                         frameBorder="0"
                         allow="autoplay; fullscreen"
                         allowFullScreen
@@ -165,6 +201,19 @@ export default function IndexFive() {
 
 
             <section className="relative md:py-24 py-16">
+                <HeadLine
+                    title="Let's Rebalance Your Portfolio Together!"
+                    description="Your description text here"
+                    size="large"
+                />
+
+
+                <DashboardDemoVideo
+                src="/videos/dashboard-demo.mp4"
+                poster="/images/dashboard-preview.jpg"
+                />
+
+
                 {/*<CreatorThree title="Best Creators & Sellers of" description="Best sellers of the week's NFTs" />*/}
                 <div className=" md:pt-24 pt-16">
                     <Feature /> <br />
