@@ -150,54 +150,54 @@ export default function IndexFive() {
 
 
 
-<section className="relative w-full h-screen overflow-hidden bg-black">
-  {/* Solid black background fallback */}
-  <div className="absolute inset-0 bg-black z-0" />
+            <section className="relative w-full h-screen overflow-hidden bg-black">
+                {/* Solid black background fallback */}
+                <div className="absolute inset-0 bg-black z-0" />
 
-  {/* Video iframe */}
-  <div className="absolute inset-0 z-10 overflow-hidden">
-    <iframe
-      title="background-video"
-      src="/videos/dashboard-demo.mp4"
-      style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%) scale(1.05)',
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        backgroundColor: '#000',
-        border: 'none',
-      }}
-      frameBorder="0"
-      allow="autoplay; fullscreen"
-      allowFullScreen
-    ></iframe>
-  </div>
+                {/* Video iframe */}
+                <div className="absolute inset-0 z-10 overflow-hidden">
+                    <iframe
+                        title="background-video"
+                        src="/videos/dashboard-demo.mp4"
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%) scale(1.05)',
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            backgroundColor: '#000',
+                            border: 'none',
+                        }}
+                        frameBorder="0"
+                        allow="autoplay; fullscreen"
+                        allowFullScreen
+                    ></iframe>
+                </div>
 
-  {/* Remove this if not needed */}
-  {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black z-20" /> */}
+                {/* Remove this if not needed */}
+                {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black z-20" /> */}
 
-  {/* Foreground content */}
-  <div className="relative z-30 flex flex-col items-center justify-center w-full h-full text-center px-4">
-    <h1 className="font-bold text-4xl lg:text-6xl text-white leading-tight lg:leading-snug">
-      The way to Find <br />
-      any <span className="bg-gradient-to-l from-red-600 to-violet-600 text-transparent bg-clip-text">Digital</span> Content
-    </h1>
-    <p className="text-white/70 text-lg max-w-xl mt-6">
-      We are a huge marketplace dedicated to connecting great artists of all Giglink with their fans and unique token collectors!
-    </p>
-    <div className="mt-8">
-      <Link
-        href="/explore-one"
-        className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full px-6 py-2"
-      >
-        Explore now
-      </Link>
-    </div>
-  </div>
-</section>
+                {/* Foreground content */}
+                <div className="relative z-30 flex flex-col items-center justify-center w-full h-full text-center px-4">
+                    <h1 className="font-bold text-4xl lg:text-6xl text-white leading-tight lg:leading-snug">
+                        The way to Find <br />
+                        any <span className="bg-gradient-to-l from-red-600 to-violet-600 text-transparent bg-clip-text">Digital</span> Content
+                    </h1>
+                    <p className="text-white/70 text-lg max-w-xl mt-6">
+                        We are a huge marketplace dedicated to connecting great artists of all Giglink with their fans and unique token collectors!
+                    </p>
+                    <div className="mt-8">
+                        <Link
+                            href="/explore-one"
+                            className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full px-6 py-2"
+                        >
+                            Explore now
+                        </Link>
+                    </div>
+                </div>
+            </section>
 
 
 
@@ -251,7 +251,8 @@ export default function IndexFive() {
                     <TinySlider settings={walletSettings}>
                         {walletData.map((wallet, index) => (
                             <div className="tiny-slide" key={index}>
-                                <div className="group relative overflow-hidden p-1.5 rounded-lg bg-white dark:bg-black border border-gray-100 dark:border-gray-800 hover:shadow-md dark:shadow-md hover:dark:shadow-gray-700 transition-all duration-500 h-fit mx-1 my-2">
+                                <div className="group relative overflow-hidden p-3 rounded-xl bg-white border border-gray-100 hover:shadow-md transition-all duration-300 dark:bg-[#101010] dark:border-white/10 dark:hover:border-violet-600 dark:hover:shadow-[0_0_24px_rgba(139,92,246,0.15)]">
+
                                     <div className="relative overflow-hidden rounded-lg">
                                         <Image
                                             src={wallet.image}
