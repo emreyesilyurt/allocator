@@ -4,7 +4,7 @@ import React, { useEffect,useState } from "react";
 import Link from "next/link";
 
 const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 
 import {accordionData} from "../data/data";

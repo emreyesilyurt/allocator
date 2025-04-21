@@ -6,7 +6,7 @@ import Image from "next/image";
 import {MdOutlineArrowForward} from "react-icons/md"
 
 const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 
 import{walletData} from "../data/data";

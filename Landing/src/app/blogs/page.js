@@ -8,7 +8,7 @@ import {LuClock, LuCalendarDays} from "react-icons/lu"
 import {MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlineArrowForward,} from "react-icons/md"
 
 const Navbar = dynamic(()=>import('../components/navbar'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 import { blogData } from "../data/data";
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Select from 'react-select';
 
 const Navbar = dynamic(()=>import('../components/navbar'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 const Feature = dynamic(()=>import('../components/feature'));
 const CollectionTwo = dynamic(()=>import('../components/collection-two'));

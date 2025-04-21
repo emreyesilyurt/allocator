@@ -5,7 +5,7 @@ import Link from "next/link";
 import {MdOutlineArrowForward} from "react-icons/md"
 
 const NavbarLight = dynamic(()=>import('../components/navbar-light'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 
 export default function Terms(){

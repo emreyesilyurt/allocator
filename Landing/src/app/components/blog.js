@@ -18,8 +18,8 @@ export default function blog() {
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
                 {blogData.slice(0, 3).map((item, index) => {
                     return (
-                        <div className="group relative overflow-hidden bg-white dark:bg-slate-900 rounded-md shadow dark:shadow-gray-700 hover:shadow-md transition-all duration-500" key={item.id}>
-                            <Image src={item.image} alt="" placeholder='blur' blurDataURL={item.image} width={0} height={0} sizes='100vw' style={{ width: "100%", height: 'auto' }} />
+<div className="group relative overflow-hidden bg-white dark:bg-[#101010] border border-gray-100 dark:border-white/10 rounded-md shadow-none dark:shadow-none hover:shadow-md transition-all duration-500" key={item.id}>
+<Image src={item.image} alt="" placeholder='blur' blurDataURL={item.image} width={0} height={0} sizes='100vw' style={{ width: "100%", height: 'auto' }} />
 
                             <div className="relative p-6">
                                 <div className="absolute start-6 -top-4">

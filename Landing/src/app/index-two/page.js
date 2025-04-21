@@ -9,7 +9,7 @@ const TinySlider = dynamic(() => import("tiny-slider-react"),{ssr:false});
 import "tiny-slider/dist/tiny-slider.css";
 
 const Navbar = dynamic(()=>import('../components/navbar'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 const CreatorThree = dynamic(()=>import('../components/creator-three'));
 const Feature = dynamic(()=>import('../components/feature'));

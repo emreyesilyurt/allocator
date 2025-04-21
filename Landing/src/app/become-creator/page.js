@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = dynamic(()=>import('../components/navbar'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 
 export default function BecomeCreator(){

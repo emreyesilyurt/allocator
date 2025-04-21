@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Navbar = dynamic(()=>import('../components/navbar'));
-const Footer = dynamic(()=>import('../components/footer-light'));
+const Footer = dynamic(()=>import('../components/footer'));
 const Switcher = dynamic(()=>import('../components/switcher'));
 
 import{LuClock, LuCalendarDays} from "react-icons/lu"
