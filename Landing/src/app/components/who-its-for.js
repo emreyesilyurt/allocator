@@ -16,7 +16,9 @@ export default function WhoItsFor({ title, description, people }) {
                 {people.map((person, index) => (
                     <div
                         key={index}
-                        className="p-5 bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 rounded-lg shadow-sm dark:shadow-gray-800 text-slate-800 dark:text-white font-medium text-base"
+                        //className="p-5 bg-white dark:bg-black border border-gray-100 dark:border-gray-800 rounded-lg shadow-sm dark:shadow-gray-800 text-slate-800 dark:text-white font-medium text-base"
+                        className="p-5 bg-white dark:bg-[#000000] border border-black/20 dark:border-white/10 rounded-lg shadow-none dark:shadow-none text-slate-800 dark:text-white font-medium text-base"
+
                     >
                         {person}
                     </div>

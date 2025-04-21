@@ -1,3 +1,4 @@
+
 "use client"; // This is a client component 👈🏽
 import dynamic from 'next/dynamic';
 import React, { useEffect } from "react";
@@ -26,8 +27,8 @@ import "tiny-slider/dist/tiny-slider.css";
 
 export default function IndexFive() {
     useEffect(() => {
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
 
         // Force full viewport coverage
         document.documentElement.style.margin = '0';
@@ -62,8 +63,9 @@ export default function IndexFive() {
             "font-urbanist",
             "text-base",
             "text-black",
-            "dark:text-white",
-            "dark:bg-slate-900"
+            "bg-white",
+            "dark:bg-black",
+            "dark:text-white"
         );
     }, []);
     const settings = {
@@ -148,53 +150,57 @@ export default function IndexFive() {
 
 
 
-            <section className="relative w-full h-screen overflow-hidden">
-                {/* Video container specific to hero section */}
-                <div className="absolute inset-0 overflow-hidden">
-                    <iframe
-                        title="background-video"
-                        src="https://player.vimeo.com/video/502163294?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1&quality=auto&responsive=1"
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%) scale(1.05)', // Slightly enlarged to avoid gaps
-                            width: 'auto',
-                            height: 'auto',
-                            minWidth: '100%',
-                            minHeight: '100%',
-                            aspectRatio: '16/9', // Modern browsers support this
-                            objectFit: 'cover',
-                            border: 'none'
-                        }}
-                        frameBorder="0"
-                        allow="autoplay; fullscreen"
-                        allowFullScreen
-                    ></iframe>
-                </div>
+<section className="relative w-full h-screen overflow-hidden bg-black">
+  {/* Solid black background fallback */}
+  <div className="absolute inset-0 bg-black z-0" />
 
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900 z-10"></div>
+  {/* Video iframe */}
+  <div className="absolute inset-0 z-10 overflow-hidden">
+    <iframe
+      title="background-video"
+      src="/videos/dashboard-demo.mp4"
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%) scale(1.05)',
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        backgroundColor: '#000',
+        border: 'none',
+      }}
+      frameBorder="0"
+      allow="autoplay; fullscreen"
+      allowFullScreen
+    ></iframe>
+  </div>
 
-                {/* Content centered */}
-                <div className="relative z-20 flex flex-col items-center justify-center w-full h-full text-center px-4">
-                    <h1 className="font-bold text-4xl lg:text-6xl text-white leading-tight lg:leading-snug">
-                        The way to Find <br />
-                        any <span className="bg-gradient-to-l from-red-600 to-violet-600 text-transparent bg-clip-text">Digital</span> Content
-                    </h1>
-                    <p className="text-white/70 text-lg max-w-xl mt-6">
-                        We are a huge marketplace dedicated to connecting great artists of all Giglink with their fans and unique token collectors!
-                    </p>
-                    <div className="mt-8">
-                        <Link
-                            href="/explore-one"
-                            className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full px-6 py-2"
-                        >
-                            Explore now
-                        </Link>
-                    </div>
-                </div>
-            </section>
+  {/* Remove this if not needed */}
+  {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black z-20" /> */}
+
+  {/* Foreground content */}
+  <div className="relative z-30 flex flex-col items-center justify-center w-full h-full text-center px-4">
+    <h1 className="font-bold text-4xl lg:text-6xl text-white leading-tight lg:leading-snug">
+      The way to Find <br />
+      any <span className="bg-gradient-to-l from-red-600 to-violet-600 text-transparent bg-clip-text">Digital</span> Content
+    </h1>
+    <p className="text-white/70 text-lg max-w-xl mt-6">
+      We are a huge marketplace dedicated to connecting great artists of all Giglink with their fans and unique token collectors!
+    </p>
+    <div className="mt-8">
+      <Link
+        href="/explore-one"
+        className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full px-6 py-2"
+      >
+        Explore now
+      </Link>
+    </div>
+  </div>
+</section>
+
+
+
 
 
 
@@ -202,15 +208,15 @@ export default function IndexFive() {
 
             <section className="relative md:py-24 py-16">
                 <HeadLine
-                    title="Let's Rebalance Your Portfolio Together!"
+                    title="#easyCrypto"
                     description="Your description text here"
-                    size="large"
+                    size="xl"
                 />
 
 
                 <DashboardDemoVideo
-                src="/videos/dashboard-demo.mp4"
-                poster="/images/dashboard-preview.jpg"
+                    src="/videos/dashboard-demo.mp4"
+                    poster="/images/dashboard-preview.jpg"
                 />
 
 
@@ -245,7 +251,7 @@ export default function IndexFive() {
                     <TinySlider settings={walletSettings}>
                         {walletData.map((wallet, index) => (
                             <div className="tiny-slide" key={index}>
-                                <div className="group relative overflow-hidden p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-gray-100 dark:border-gray-800 hover:shadow-md dark:shadow-md hover:dark:shadow-gray-700 transition-all duration-500 h-fit mx-1 my-2">
+                                <div className="group relative overflow-hidden p-1.5 rounded-lg bg-white dark:bg-black border border-gray-100 dark:border-gray-800 hover:shadow-md dark:shadow-md hover:dark:shadow-gray-700 transition-all duration-500 h-fit mx-1 my-2">
                                     <div className="relative overflow-hidden rounded-lg">
                                         <Image
                                             src={wallet.image}
@@ -255,7 +261,7 @@ export default function IndexFive() {
                                             width={0}
                                             height={0}
                                             sizes="100vw"
-                                            className="rounded-lg shadow-sm dark:shadow-gray-700 group-hover:scale-110 transition-all duration-500 grayscale hover:grayscale-0"
+                                            className="rounded-lg shadow-sm dark:shadow-black group-hover:scale-110 transition-all duration-500 grayscale hover:grayscale-0"
                                             style={{ width: "100%", height: "auto", maxHeight: "100px", objectFit: "contain" }}
                                         />
                                     </div>

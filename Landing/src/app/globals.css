@@ -8,6 +8,21 @@ html {
   font-family: var(--font-urbanist)!important ;
 }
 
+html.dark {
+  background-color: #000 !important;
+}
+
+@layer base {
+  .dark {
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 0 0 / var(--tw-bg-opacity)) !important;
+  }
+}
+html.dark .nav-sticky {
+  background-color: #000 !important;
+}
+
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

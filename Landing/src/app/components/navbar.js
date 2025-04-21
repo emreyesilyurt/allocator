@@ -201,7 +201,11 @@ export default function Navbar() {
     };
 
     return (
-        <nav id="topnav" className="defaultscroll is-sticky">
+        //<nav id="topnav" className="defaultscroll is-sticky"> // this is the default version before convert dark mode background color
+        //<nav className="fixed top-0 inset-x-0 z-50 bg-black/50 backdrop-blur dark:bg-black/380 transition-colors duration-300">
+        <nav className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur dark:bg-black/80 transition-colors duration-300">
+
+
             <div className="container flex flex-wrap items-center justify-between">
                 {/* Left: Logo */}
                 <Link className="logo flex items-center" href="/">
