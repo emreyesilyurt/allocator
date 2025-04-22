@@ -9,8 +9,8 @@ const Topnav = dynamic(() => import('./components/topnav'))
 const Switcher = dynamic(() => import('./components/switcher'))
 const Footer = dynamic(() => import('./components/footer'))
 
-const TradingViewWidget = dynamic(()=> import('react-tradingview-widget'),{ssr: false,})
-
+//const TradingViewWidget = dynamic(()=> import('react-tradingview-widget'),{ssr: false,})
+import TradingViewWidget from '../components/TradingViewWidget';
 import SimpleBarReact from "simplebar-react";
 
 import { data } from './data/data'
