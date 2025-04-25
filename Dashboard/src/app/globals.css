@@ -1,4 +1,90 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html.dark {
+  background-color: #000000;
+}
+
+body {
+  @apply font-urbanist text-base text-black dark:text-white dark:bg-black;
+} */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@import 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0';
+
+html {
+  font-family: var(--font-urbanist)!important;
+}
+
+/* Dark mode - force pure black */
+html.dark {
+  background-color: #000 !important;
+}
+
+html.dark body,
+html.dark .page-wrapper,
+html.dark .page-content,
+html.dark #sidebar,
+html.dark .sidebar-wrapper,
+html.dark .top-header,
+html.dark .header-bar,
+html.dark .dropdown-menu,
+html.dark footer,
+html.dark nav {
+  background-color: #000 !important;
+}
+
+/* Light mode - force pure white */
+html:not(.dark) {
+  background-color: #FFF !important;
+}
+
+html:not(.dark) body,
+html:not(.dark) .page-wrapper,
+html:not(.dark) .page-content,
+html:not(.dark) #sidebar,
+html:not(.dark) .sidebar-wrapper,
+html:not(.dark) .top-header,
+html:not(.dark) .header-bar,
+html:not(.dark) .dropdown-menu,
+html:not(.dark) footer,
+html:not(.dark) nav {
+  background-color: #FFF !important;
+}
+
+/* Ensure all cards and containers have proper backgrounds in dark mode */
+html.dark .card,
+html.dark .container,
+html.dark .panel,
+html.dark [class*="bg-slate-900"],
+html.dark [class*="bg-slate-800"],
+html.dark [class*="bg-gray-900"],
+html.dark [class*="bg-gray-800"],
+html.dark [class*="dark:bg-slate-900"],
+html.dark [class*="dark:bg-slate-800"],
+html.dark [class*="dark:bg-gray-900"],
+html.dark [class*="dark:bg-gray-800"] {
+  background-color: #000 !important;
+}
+
+/* Use !important to override any styles that might be conflicting */
+.force-dark-black {
+  @apply dark:!bg-black;
+}
+
+.force-light-white {
+  @apply !bg-white;
+}
+
+html.dark .dashboard-shell {
+  background-color: #000 !important;
+  color: white !important;
+}
+
+/* Additional style for sticky nav */
+html.dark .nav-sticky {
+  background-color: #000 !important;
+}
