@@ -448,6 +448,7 @@ export default function Home() {
                                                 }
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -465,7 +466,7 @@ export default function Home() {
                                             </div>
                                         </div>
 
-                                        <div className="relative overflow-hidden rounded-lg border border-gray-100 dark:border-gray-800 bg-white dark:bg-black">
+                                       <div className="relative overflow-hidden rounded-lg border border-gray-100 dark:border-gray-800 bg-white dark:bg-black">
                                             <div className="p-4 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
                                                 <h6 className="text-lg font-semibold">Top Creators</h6>
 
@@ -531,6 +532,7 @@ export default function Home() {
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
 
                         </div>

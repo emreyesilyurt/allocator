@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
-  basePath: "/app",
+  //basePath: "/app",
 };
 
 module.exports = nextConfig;
