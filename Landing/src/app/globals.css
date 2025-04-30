@@ -99,8 +99,9 @@ button.btn,
 .btn.hover\:bg-violet-700 {
   background-color: var(--tw-bg-opacity, 1) !important;
   border-color: var(--tw-border-opacity, 1) !important;
-  color: var(--tw-text-opacity, 1) !important;
+  color: #ffffff !important; /* ✅ FIXED */
 }
+
 
 /* Restore the specific violet button */
 .btn.bg-violet-600 {

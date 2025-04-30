@@ -34,10 +34,11 @@ export default function Feature() {
               href="#"
               className="text-lg h5 font-semibold transition duration-500 ease-in-out hover:text-violet-600"
             >
-              Choose Your Risk Profile
+              Get Your Personalized Risk Profile
+
             </Link>
             <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-              Select from Conservative, Balanced, or Aggressive to match your investment strategy.
+            Answer a short set of smart questions to assess your investment goals, time horizon, and risk comfort. No generic presets — just your true profile.
             </p>
           </div>
         </div>
@@ -55,10 +56,10 @@ export default function Feature() {
               href="#"
               className="text-lg h5 font-semibold transition duration-500 ease-in-out hover:text-violet-600"
             >
-              Input Your Holdings
+              Connect or Enter Your Portfolio
             </Link>
             <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-              Manually enter your current crypto asset allocations — no login or wallet needed.
+            Link your crypto wallet for faster setup or enter holdings manually. Allocator gives you full control with or without login — your data, your choice.
             </p>
           </div>
         </div>
@@ -79,7 +80,9 @@ export default function Feature() {
               Optimize and Compare
             </Link>
             <p className="text-slate-400 transition duration-500 ease-in-out mt-3">
-              Instantly see a recommended portfolio and compare it with your current allocations — all visualized.
+            See how your current portfolio stacks up against an AI-recommended one. Visualize risk, rebalance options, and growth potential in seconds.
+
+
             </p>
           </div>
         </div>

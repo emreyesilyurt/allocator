@@ -122,69 +122,114 @@ export default function IndexFive() {
             <Navbar />
 
             <section className="relative w-full h-screen overflow-hidden">
-  {/* Base layer - FORCED pure black in dark mode */}
-  <div className="absolute inset-0 bg-white dark:bg-black dark:!bg-black z-0" 
-       style={{
-         backgroundColor: 'white',
-         '--tw-bg-opacity': '1',
-         ['--dark-bg-color']: '#000000'
-       }}
-  />
+                {/* Base layer - FORCED pure black in dark mode */}
+                <div className="absolute inset-0 bg-white dark:bg-black dark:!bg-black z-0"
+                    style={{
+                        backgroundColor: 'white',
+                        '--tw-bg-opacity': '1',
+                        ['--dark-bg-color']: '#000000'
+                    }}
+                />
 
-  {/* Stars or Video Background */}
-  <div className="absolute inset-0 z-10 overflow-hidden">
-    {/* If using stars animation */}
-    <div className="absolute inset-0 opacity-70 dark:opacity-50">
-      {/* Your stars animation component here */}
-    </div>
-    
-    {/* OR if using video iframe */}
-    <div style={{
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      width: '177.77vh',
-      height: '100vh',
-      transform: 'translate(-50%, -50%)',
-      pointerEvents: 'none',
-    }}>
-      <iframe
-        title="background-video"
-        src="https://www.youtube.com/embed/HPph35tdMP8?autoplay=1&mute=1&controls=0&loop=1&playlist=HPph35tdMP8&modestbranding=1&showinfo=0&rel=0"
-        style={{
-          width: '100%',
-          height: '100%',
-          border: 'none',
-        }}
-        frameBorder="0"
-        allow="autoplay; fullscreen; encrypted-media"
-        allowFullScreen
-      ></iframe>
-    </div>
-  </div>
+                <div className="absolute inset-0 z-10 overflow-hidden">
+                    {/* Light Mode Video */}
+                    <div className="block dark:hidden absolute inset-0">
+                        {/* White overlay */}
+                        <div className="absolute inset-0 bg-white opacity-50 pointer-events-none z-10"></div>
 
-  {/* STRONG black overlay ONLY in dark mode - higher opacity */}
-  <div className="absolute inset-0 z-20 hidden dark:block bg-black opacity-90" />
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                width: '177.77vh',
+                                height: '100vh',
+                                transform: 'translate(-50%, -50%)',
+                                pointerEvents: 'none',
+                            }}
+                            className="z-0"
+                        >
+                            <iframe
+                                title="light-mode-video"
+                                src="https://www.youtube.com/embed/PShhk9fAE1o?autoplay=1&mute=1&controls=0&loop=1&playlist=PShhk9fAE1o&modestbranding=1&showinfo=0&rel=0"
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    border: 'none',
+                                    backgroundColor: 'transparent',
+                                }}
+                                frameBorder="0"
+                                allow="autoplay; fullscreen; encrypted-media"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                    </div>
 
-  {/* Foreground content - with higher contrast */}
-  <div className="relative z-30 flex flex-col items-center justify-center w-full h-full text-center px-4">
-    <h1 className="font-bold text-4xl lg:text-6xl text-white leading-tight lg:leading-snug">
-      Your Portfolio<br />Your Risk Profile<br />
-      <span className="bg-gradient-to-l from-red-600 to-violet-600 text-transparent bg-clip-text">Your Strategy</span>
-    </h1>
-    <p className="text-white/80 text-lg max-w-xl mt-6">
-      Allocator empowers you to invest smarter. Whether you already hold crypto assets or you're planning your first investments, our intelligent engine helps you optimize your allocation.
-    </p>
-    <div className="mt-8">
-      <Link
-        href="/explore-one"
-        className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full px-6 py-2"
-      >
-        Explore now
-      </Link>
-    </div>
-  </div>
-</section>
+                    {/* Dark Mode Video */}
+                    <div className="hidden dark:block absolute inset-0">
+                        {/* Black overlay */}
+                        <div className="absolute inset-0 bg-black opacity-40 pointer-events-none z-10"></div>
+
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                width: '177.77vh',
+                                height: '100vh',
+                                transform: 'translate(-50%, -50%)',
+                                pointerEvents: 'none',
+                            }}
+                            className="z-0"
+                        >
+                            <iframe
+                                title="dark-mode-video"
+                                src="https://www.youtube.com/embed/HPph35tdMP8?autoplay=1&mute=1&controls=0&loop=1&playlist=HPph35tdMP8&modestbranding=1&showinfo=0&rel=0"
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    border: 'none',
+                                    backgroundColor: 'transparent',
+                                }}
+                                frameBorder="0"
+                                allow="autoplay; fullscreen; encrypted-media"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                {/* STRONG black overlay ONLY in dark mode - higher opacity */}
+                <div className="absolute inset-0 z-20 hidden dark:block bg-black opacity-90" />
+
+                {/* Foreground content - with higher contrast */}
+                <div className="relative z-30 flex flex-col items-center justify-center w-full h-full text-center px-4">
+                    <h1 className="font-bold text-4xl lg:text-6xl text-black dark:text-white leading-tight lg:leading-snug">
+                        Investment Solutions for
+                        <br />
+                        <span className="bg-gradient-to-l from-red-600 to-violet-600 text-transparent bg-clip-text">
+                            Crypto Holders
+                        </span>
+                        <br />
+                        to Drive Portfolio Efficiency
+                    </h1>
+                    <p className="text-gray-800 dark:text-white/80 text-lg max-w-xl mt-6">
+                        Allocator uses AI to build, balance and optimize your crypto portfolio based on your risk tolerance and market conditions.
+                    </p>
+
+                    <div className="mt-8">
+                        <Link
+                            href="/explore-one"
+                            className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full px-6 py-2"
+                        >
+                            Build Your Portfolio
+                        </Link>
+                    </div>
+                </div>
+            </section>
 
 
 
@@ -198,8 +243,8 @@ export default function IndexFive() {
             <section className="relative md:py-24 py-16">
                 <HeadLine
                     title="#smartInvestments"
-                    description="Your description text here"
-                    size="xl"
+                    description="Allocator transforms random crypto holdings into strategic portfolios tailored to your risk profile. Our AI analyzes thousands of assets to maximize returns while respecting your comfort level."
+                    size="large"
                 />
 
 
