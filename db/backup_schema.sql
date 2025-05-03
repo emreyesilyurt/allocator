@@ -17,13 +17,3 @@ CREATE TABLE portfolio_assets (
     asset TEXT NOT NULL,
     percentage NUMERIC NOT NULL
 );
-
-
--- Add authentication fields to users table
-ALTER TABLE users
-ADD COLUMN username TEXT UNIQUE,
-ADD COLUMN password_hash TEXT;
-
--- Optional: ensure email is also unique for auth
-ALTER TABLE users
-ADD CONSTRAINT unique_email UNIQUE (email);
