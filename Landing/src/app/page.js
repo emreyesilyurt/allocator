@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+//const Navbar = dynamic(() => import('./components/navbar'));
 const Navbar = dynamic(() => import('./components/navbar'));
 const Footer = dynamic(() => import('./components/footer'));
 const Switcher = dynamic(() => import('./components/switcher'));
@@ -26,19 +27,35 @@ import "tiny-slider/dist/tiny-slider.css";
 
 export default function IndexFive() {
     const [loggedIn, setLoggedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Authentication check
         async function checkLogin() {
             try {
-                const res = await fetch('/api/auth/check', { credentials: 'include' });
+                setLoading(true);
+                const res = await fetch('/api/auth/check', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                if (!res.ok) {
+                    throw new Error('Failed to verify authentication');
+                }
+
                 const data = await res.json();
                 setLoggedIn(data.loggedIn);
             } catch (err) {
-                console.error('Login check failed', err);
+                console.error('Authentication check failed:', err);
+                setLoggedIn(false); // Ensure logged out state on error
+            } finally {
+                setLoading(false);
             }
         }
+
         checkLogin();
 
+        // Your existing theme-related code
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
 
@@ -130,7 +147,7 @@ export default function IndexFive() {
         <>
             <Navbar />
             {loggedIn && (
-              <div className="text-center text-white bg-green-700 py-2">✅ You are logged in</div>
+                <div className="text-center text-white bg-green-700 py-2">✅ You are logged in</div>
             )}
 
 
