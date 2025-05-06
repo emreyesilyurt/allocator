@@ -1,7 +1,7 @@
 
 "use client"; // This is a client component 👈🏽
 import dynamic from 'next/dynamic';
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -21,32 +21,21 @@ const HeadLine = dynamic(() => import('./components/headline'));
 import { walletData } from './data/data';
 import DashboardDemoVideo from './components/demo-video'
 
+
 const TinySlider = dynamic(() => import("tiny-slider-react"), { ssr: false });
 import "tiny-slider/dist/tiny-slider.css";
 
 export default function IndexFive() {
-    const [loggedIn, setLoggedIn] = useState(false);
-
     useEffect(() => {
-        async function checkLogin() {
-            try {
-                const res = await fetch('/api/auth/check', { credentials: 'include' });
-                const data = await res.json();
-                setLoggedIn(data.loggedIn);
-            } catch (err) {
-                console.error('Login check failed', err);
-            }
-        }
-        checkLogin();
-
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
 
+        // Force full viewport coverage
         document.documentElement.style.margin = '0';
         document.documentElement.style.padding = '0';
         document.documentElement.style.width = '100%';
         document.documentElement.style.height = '100%';
-        document.documentElement.style.overflow = 'hidden scroll';
+        document.documentElement.style.overflow = 'hidden scroll'; // Allow vertical scroll only
         document.documentElement.style.boxSizing = 'border-box';
 
         document.body.style.margin = '0';
@@ -56,6 +45,7 @@ export default function IndexFive() {
         document.body.style.overflow = 'visible';
         document.body.style.boxSizing = 'border-box';
 
+        // Add viewport meta tag programmatically if not present
         const viewportMeta = document.querySelector('meta[name="viewport"]');
         if (!viewportMeta) {
             const meta = document.createElement('meta');
@@ -63,6 +53,7 @@ export default function IndexFive() {
             meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
             document.head.appendChild(meta);
         } else {
+            // Update existing viewport meta to include viewport-fit=cover
             if (!viewportMeta.content.includes('viewport-fit=cover')) {
                 viewportMeta.content += ', viewport-fit=cover';
             }
@@ -105,12 +96,12 @@ export default function IndexFive() {
         autoplayTimeout: 1000,
         navPosition: "bottom",
         speed: 200,
-        gutter: 16,
-        edgePadding: 20,
+        gutter: 16, // Increased gutter for consistent spacing
+        edgePadding: 20, // Added edge padding for better visual at edges
         center: false,
         responsive: {
             1025: {
-                items: 6
+                items: 6 // Showing more items for larger screens
             },
             992: {
                 items: 5
@@ -129,10 +120,6 @@ export default function IndexFive() {
     return (
         <>
             <Navbar />
-            {loggedIn && (
-              <div className="text-center text-white bg-green-700 py-2">✅ You are logged in</div>
-            )}
-
 
             <section className="relative w-full h-screen overflow-hidden">
                 {/* Base layer - FORCED pure black in dark mode */}
