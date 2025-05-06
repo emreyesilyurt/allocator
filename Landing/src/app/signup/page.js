@@ -274,7 +274,7 @@ const Signup = () => {
     setLoading(true);
     setError('');
     setSuccess(false);
-
+  
     try {
       // Log the request for debugging
       console.log('Sending registration request:', {
@@ -282,7 +282,7 @@ const Signup = () => {
         method: 'POST',
         body: { ...formData, password: '[REDACTED]' } // Don't log actual password
       });
-
+  
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -291,26 +291,27 @@ const Signup = () => {
         body: JSON.stringify(formData),
         credentials: 'include', // Important for cookie handling
       });
-
+  
       const data = await response.json();
       console.log('Registration response:', {
         status: response.status,
         ok: response.ok,
         data: data
       });
-
+  
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
       }
-
+  
       // Show success message before redirecting
       setSuccess(true);
       
       // If successful, redirect to login page after a short delay
       setTimeout(() => {
-        // Use window.location for a full page navigation to avoid router issues
-        window.location.href = '/login?registered=true';
-      }, 1500);
+        // Use plain JavaScript redirection instead of Next.js routing
+        // Make sure to use the full URL path starting with /
+        window.location.href = '/login';
+      }, 2000);
     } catch (err) {
       console.error('Registration error:', err);
       setError(err.message || 'An error occurred during registration');
