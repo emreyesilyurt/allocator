@@ -1,9 +1,13 @@
-
 "use client"; // This is a client component 👈🏽
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
+// Import Swiper components and styles
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
 
 //const Navbar = dynamic(() => import('./components/navbar'));
 const Navbar = dynamic(() => import('./components/navbar'));
@@ -21,9 +25,6 @@ const HeadLine = dynamic(() => import('./components/headline'));
 
 import { walletData } from './data/data';
 import DashboardDemoVideo from './components/demo-video'
-
-const TinySlider = dynamic(() => import("tiny-slider-react"), { ssr: false });
-import "tiny-slider/dist/tiny-slider.css";
 
 export default function IndexFive() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -94,6 +95,7 @@ export default function IndexFive() {
             "dark:text-white"
         );
     }, []);
+    
     const settings = {
         items: 1,
         controls: true,
@@ -112,37 +114,7 @@ export default function IndexFive() {
             '<i class="mdi mdi-chevron-right"></i>',
         ],
     };
-    const walletSettings = {
-        controls: false,
-        mouseDrag: true,
-        loop: true,
-        rewind: true,
-        autoplay: true,
-        autoplayButtonOutput: false,
-        autoplayTimeout: 1000,
-        navPosition: "bottom",
-        speed: 200,
-        gutter: 16,
-        edgePadding: 20,
-        center: false,
-        responsive: {
-            1025: {
-                items: 6
-            },
-            992: {
-                items: 5
-            },
-            767: {
-                items: 4
-            },
-            425: {
-                items: 2
-            },
-            375: {
-                items: 1
-            }
-        },
-    };
+    
     return (
         <>
             <Navbar />
@@ -229,9 +201,6 @@ export default function IndexFive() {
                     </div>
                 </div>
 
-
-
-
                 {/* STRONG black overlay ONLY in dark mode - higher opacity */}
                 <div className="absolute inset-0 z-20 hidden dark:block bg-black opacity-90" />
 
@@ -261,15 +230,6 @@ export default function IndexFive() {
                 </div>
             </section>
 
-
-
-
-
-
-
-
-
-
             <section className="relative md:py-24 py-16">
                 <HeadLine
                     title="#smartInvestments"
@@ -277,12 +237,10 @@ export default function IndexFive() {
                     size="large"
                 />
 
-
                 <DashboardDemoVideo
                     src="/videos/dashboard-demo.mp4"
                     poster="/images/dashboard-preview.jpg"
                 />
-
 
                 {/*<CreatorThree title="Best Creators & Sellers of" description="Best sellers of the week's NFTs" />*/}
                 <div className=" md:pt-24 pt-16">
@@ -311,12 +269,28 @@ export default function IndexFive() {
                         </h3>
                     </div>  <br />  <br />
 
-
-                    <TinySlider settings={walletSettings}>
+                    {/* Replaced TinySlider with Swiper */}
+                    <Swiper
+                        modules={[Autoplay]}
+                        spaceBetween={16}
+                        loop={true}
+                        autoplay={{
+                            delay: 1000,
+                            disableOnInteraction: false,
+                        }}
+                        speed={200}
+                        breakpoints={{
+                            375: { slidesPerView: 1 },
+                            425: { slidesPerView: 2 },
+                            767: { slidesPerView: 4 },
+                            992: { slidesPerView: 5 },
+                            1025: { slidesPerView: 6 },
+                        }}
+                        className="wallet-swiper"
+                    >
                         {walletData.map((wallet, index) => (
-                            <div className="tiny-slide" key={index}>
+                            <SwiperSlide key={index}>
                                 <div className="group relative overflow-hidden p-3 rounded-xl bg-white border border-gray-100 hover:shadow-md transition-all duration-300 dark:bg-[#101010] dark:border-white/10 dark:hover:border-violet-600 dark:hover:shadow-[0_0_24px_rgba(139,92,246,0.15)]">
-
                                     <div className="relative overflow-hidden rounded-lg">
                                         <Image
                                             src={wallet.image}
@@ -336,9 +310,9 @@ export default function IndexFive() {
                                         </h5>
                                     </div>
                                 </div>
-                            </div>
+                            </SwiperSlide>
                         ))}
-                    </TinySlider>
+                    </Swiper>
                 </div>
 
                 <QA />

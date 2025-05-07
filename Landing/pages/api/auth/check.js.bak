@@ -1,5 +1,17 @@
-// Import cookie module correctly
-import * as cookie from 'cookie';
+
+// export default async function handler(req, res) {
+//   const cookie = req.headers.cookie || '';
+//   const isLoggedIn = cookie.includes('loggedIn=true');
+//   res.status(200).json({ loggedIn: isLoggedIn });
+// }
+
+import { Pool } from 'pg';
+import cookie from 'cookie';
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+});
 
 export default async function handler(req, res) {
   // Get the cookie from the request
