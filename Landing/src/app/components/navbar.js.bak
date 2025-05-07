@@ -1,4 +1,4 @@
-"use client";
+"use client"; // This is a client component 👈🏽
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,33 +6,20 @@ import { AiOutlineCopy, AiOutlineUser } from "react-icons/ai";
 import { LuSearch, LuSettings } from 'react-icons/lu';
 import { PiWalletBold } from "react-icons/pi";
 import { LiaSignOutAltSolid } from 'react-icons/lia';
-import { FiUser } from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi'; // Added user icon import
 
 export default function Navbar() {
     const [isDropdown, openDropdown] = useState(true);
     const [isOpen, setMenu] = useState(true);
-    const [user, setUser] = useState(null);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
             window.addEventListener("scroll", windowScroll);
-            fetchUser();  // Fetch user session info
             return () => window.removeEventListener("scroll", windowScroll);
         }
         window.scrollTo(0, 0);
         activateMenu();
     }, []);
-
-    async function fetchUser() {
-        try {
-            const res = await fetch('/api/auth/check');
-            if (!res.ok) throw new Error("Unauthorized");
-            const data = await res.json();
-            setUser(data.user);
-        } catch (err) {
-            setUser(null);
-        }
-    }
 
     function windowScroll() {
         const navbar = document.getElementById("topnav");
@@ -57,9 +44,16 @@ export default function Navbar() {
     };
 
     return (
+        //<nav id="topnav" className="defaultscroll is-sticky"> // this is the default version before convert dark mode background color
+        //<nav className="fixed top-0 inset-x-0 z-50 bg-black/50 backdrop-blur dark:bg-black/380 transition-colors duration-300">
+        //<nav className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur dark:bg-black/80 transition-colors duration-300">
+        //<nav id="topnav" className="fixed top-0 inset-x-0 z-50 bg-black dark:bg-black !bg-black !dark:bg-black transition-colors duration-300">
         <nav id="topnav" className="fixed top-0 inset-x-0 z-50 bg-white dark:bg-black transition-colors duration-300">
+
+
+
             <div className="container flex flex-wrap items-center justify-between">
-                {/* Logo */}
+                {/* Left: Logo */}
                 <Link className="logo flex items-center" href="/">
                     <Image src="/images/logo-icon-28.png" width={28} height={28} className="inline-block sm:hidden" alt="" />
                     <div className="sm:block hidden">
@@ -68,7 +62,7 @@ export default function Navbar() {
                     </div>
                 </Link>
 
-                {/* Navigation */}
+                {/* Center: Navigation Links + Search */}
                 <div className="hidden lg:flex items-center space-x-6 mx-auto">
                     <Link href="/aboutus" className="sub-menu-item text-sm font-medium">Services</Link>
                     <Link href="/blogs" className="sub-menu-item text-sm font-medium">Learn</Link>
@@ -85,9 +79,9 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Avatar + Try it Free */}
+                {/* Right: Avatar & Try It Free */}
                 <div className="flex items-center gap-4">
-                    {/* Avatar */}
+                    {/* Avatar Dropdown with Icon instead of Image */}
                     <div className="relative">
                         <button
                             onClick={() => openDropdown(!isDropdown)}
@@ -107,9 +101,7 @@ export default function Navbar() {
                                         <div className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-white">
                                             <FiUser className="w-5 h-5" />
                                         </div>
-                                        <span className="font-semibold text-[15px] ms-1">
-                                            {user?.name || user?.email || "Guest"}
-                                        </span>
+                                        <span className="font-semibold text-[15px] ms-1">User Name</span>
                                     </div>
                                 </div>
                             </div>
@@ -117,15 +109,13 @@ export default function Navbar() {
                             <div className="mt-10 px-4">
                                 <h5 className="font-semibold text-[15px]">Wallet:</h5>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-[13px] text-slate-400">
-                                        {user?.wallet?.slice(0, 6) + '...' + user?.wallet?.slice(-4) || '0x000...000'}
-                                    </span>
+                                    <span className="text-[13px] text-slate-400">0x000...000</span>
                                     <Link href="#" className="text-violet-600"><AiOutlineCopy /></Link>
                                 </div>
                             </div>
 
                             <div className="mt-4 px-4">
-                                <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{user?.balance || "0.00 ETH"}</span></h5>
+                                <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">0.00 ETH</span></h5>
                             </div>
 
                             <ul className="py-2 text-start">
@@ -149,7 +139,7 @@ export default function Navbar() {
                         </div>
                     </div>
 
-                    {/* CTA */}
+                    {/* Try it Free button */}
                     <Link
                         href="/signup"
                         className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
