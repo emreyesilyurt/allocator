@@ -215,7 +215,7 @@
 //                                       <div className="flex items-end">
 //                                           <Image src="/images/client/05.jpg" width={40} height={40} className="rounded-full size-10 shadow dark:shadow-gray-700" alt=""/>
 
-//                                           <span className="font-semibold text-[15px] ms-1">Jenny Jimenez</span>
+//                                           <span className="font-semibold text-[15px] ms-1">{userInfo?.name || "Guest"}</span>
 //                                       </div>
 //                                   </div>
 //                               </div>
@@ -223,13 +223,13 @@
 //                               <div className="mt-10 px-4">
 //                                   <h5 className="font-semibold text-[15px]">Wallet:</h5>
 //                                   <div className="flex items-center justify-between">
-//                                       <span className="text-[13px] text-slate-400">qhut0...hfteh45</span>
+//                                       <span className="text-[13px] text-slate-400">{userInfo?.wallet || "—"}</span>
 //                                       <Link href="#" className="text-violet-600"><BiWallet/></Link>
 //                                   </div>
 //                               </div>
 
 //                               <div className="mt-4 px-4">
-//                                   <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">0.00045ETH</span></h5>
+//                                   <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{userInfo?.balance || "0.00 ETH"}</span></h5>
 //                               </div>
 
 //                               <ul className="py-2 text-start">
@@ -469,7 +469,7 @@ export default function Topnav({setToggle, toggle}){
                                       <div className="flex items-end">
                                           <Image src="/images/client/05.jpg" width={40} height={40} className="rounded-full size-10 shadow dark:shadow-gray-700" alt=""/>
 
-                                          <span className="font-semibold text-[15px] ms-1">Jenny Jimenez</span>
+                                          <span className="font-semibold text-[15px] ms-1">{userInfo?.name || "Guest"}</span>
                                       </div>
                                   </div>
                               </div>
@@ -477,13 +477,13 @@ export default function Topnav({setToggle, toggle}){
                               <div className="mt-10 px-4">
                                   <h5 className="font-semibold text-[15px]">Wallet:</h5>
                                   <div className="flex items-center justify-between">
-                                      <span className="text-[13px] text-slate-400">qhut0...hfteh45</span>
+                                      <span className="text-[13px] text-slate-400">{userInfo?.wallet || "—"}</span>
                                       <Link href="#" className="text-violet-600"><BiWallet/></Link>
                                   </div>
                               </div>
 
                               <div className="mt-4 px-4">
-                                  <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">0.00045ETH</span></h5>
+                                  <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{userInfo?.balance || "0.00 ETH"}</span></h5>
                               </div>
 
                               <ul className="py-2 text-start">

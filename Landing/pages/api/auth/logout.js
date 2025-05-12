@@ -1,11 +1,13 @@
-
 import cookie from 'cookie';
 
 export default async function handler(req, res) {
-  res.setHeader('Set-Cookie', cookie.serialize('loggedIn', '', {
-    path: '/',
+  res.setHeader('Set-Cookie', cookie.serialize('token', '', {
     httpOnly: true,
-    expires: new Date(0),
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Lax',
+    path: '/',
+    expires: new Date(0), // Expire immediately
   }));
+  
   res.status(200).json({ message: 'Logged out' });
 }

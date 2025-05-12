@@ -1,34 +1,46 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation';
 import SimpleBarReact from "simplebar-react";
 import 'simplebar-react/dist/simplebar.min.css';
-import { Airplay, Film, Wifi, Copy, Users, FileText, File, LogIn, Layers } from 'react-feather'
+import { Airplay, Film, Wifi, Copy, Users, FileText, File, LogIn, Layers } from 'react-feather';
 
 export default function Navbar() {
     const [manu, setManu] = useState('');
     const [subManu, setSubManu] = useState('');
-    const pathname = usePathname()
+    const pathname = usePathname();
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        setManu(pathname)
-        setSubManu(pathname)
+        setManu(pathname);
+        setSubManu(pathname);
         window.scrollTo(0, 0);
-    }, [setManu, setSubManu])
+        fetchUser();
+    }, [setManu, setSubManu]);
 
+    async function fetchUser() {
+        try {
+            const res = await fetch('/api/auth/check', { credentials: 'include' });
+            const data = await res.json();
+            if (data.loggedIn) {
+                setUser(data.user);
+            } else {
+                setUser(null);
+            }
+        } catch (err) {
+            setUser(null);
+        }
+    }
 
     return (
         <nav id="sidebar" className="sidebar-wrapper bg-white dark:bg-black">
             <div className="sidebar-content">
                 <div className="sidebar-brand">
                     <Link href="/">
-                        <Image src="/images/logo-dark.png" width={116} height={24} placeholder="empty" className="block dark:hidden" alt=""/>
-                            
-                        <Image src="/images/logo-light.png" width={116} height={24}  placeholder="empty" className="hidden dark:block" alt=""/>
-
-
+                        <Image src="/images/logo-dark.png" width={116} height={24} placeholder="empty" className="block dark:hidden" alt="" />
+                        <Image src="/images/logo-light.png" width={116} height={24} placeholder="empty" className="hidden dark:block" alt="" />
                     </Link>
                 </div>
                 <SimpleBarReact style={{ height: "calc(100% - 70px)" }}>

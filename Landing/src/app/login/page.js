@@ -1,12 +1,129 @@
+// "use client"; // This is a client component 👈🏽
+// import dynamic from 'next/dynamic'
+// import React, { useState, useEffect } from "react";
+// import Link from "next/link";
+// import Image from "next/image";
+// import { useRouter, useSearchParams } from 'next/navigation';
+
+// const Switcher = dynamic(() => import('../components/switcher'));
+
+// export default function Login() {
+//     const [formData, setFormData] = useState({
+//         email: '',
+//         password: '',
+//         rememberMe: false
+//     });
+//     const [error, setError] = useState('');
+//     const [success, setSuccess] = useState('');
+//     const [loading, setLoading] = useState(false);
+//     const router = useRouter();
+//     const searchParams = useSearchParams();
+
+//     useEffect(() => {
+//         document.documentElement.classList.add("dark");
+//         document.body.classList.add(
+//             "font-urbanist",
+//             "text-base",
+//             "text-black",
+//             "dark:text-white",
+//             "dark:bg-slate-900"
+//         );
+
+//         const registered = searchParams.get("registered");
+//         if (registered) setSuccess("Account created successfully. You may now login.");
+//     }, [searchParams]);
+
+//     const handleChange = (e) => {
+//         const { name, value, type, checked } = e.target;
+//         setFormData(prev => ({
+//             ...prev,
+//             [name]: type === "checkbox" ? checked : value
+//         }));
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         setLoading(true);
+//         setError('');
+//         setSuccess('');
+
+//         try {
+//             const res = await fetch('/api/auth/login', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify(formData),
+//             });
+
+//             if (res.ok) {
+//                 router.push('http://localhost:3000');
+//             } else {
+//                 const data = await res.json();
+//                 setError(data.message || 'Login failed');
+//             }
+//         } catch (err) {
+//             console.error(err);
+//             setError('Something went wrong');
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     return (
+//         <div className="max-w-md mx-auto mt-20 p-6 bg-white dark:bg-gray-800 rounded shadow">
+//             <h2 className="text-xl mb-4 font-semibold text-gray-900 dark:text-white">Login</h2>
+//             {success && <p className="text-green-600 mb-2">{success}</p>}
+//             {error && <p className="text-red-600 mb-2">{error}</p>}
+
+//             <form onSubmit={handleSubmit} className="space-y-4">
+//                 <input
+//                     type="email"
+//                     name="email"
+//                     placeholder="Email"
+//                     value={formData.email}
+//                     onChange={handleChange}
+//                     className="w-full px-3 py-2 border rounded"
+//                     required
+//                 />
+//                 <input
+//                     type="password"
+//                     name="password"
+//                     placeholder="Password"
+//                     value={formData.password}
+//                     onChange={handleChange}
+//                     className="w-full px-3 py-2 border rounded"
+//                     required
+//                 />
+//                 <label className="flex items-center">
+//                     <input
+//                         type="checkbox"
+//                         name="rememberMe"
+//                         checked={formData.rememberMe}
+//                         onChange={handleChange}
+//                         className="mr-2"
+//                     />
+//                     Remember me
+//                 </label>
+//                 <button
+//                     type="submit"
+//                     disabled={loading}
+//                     className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+//                 >
+//                     {loading ? 'Logging in...' : 'Login'}
+//                 </button>
+//             </form>
+//         </div>
+//     );
+// }
+
 
 "use client"; // This is a client component 👈🏽
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation'; // ✅ FIXED
 
-const Switcher = dynamic(()=>import('../components/switcher'));
+const Switcher = dynamic(() => import('../components/switcher'));
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -18,75 +135,61 @@ export default function Login() {
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
     const searchParams = useSearchParams();
+    const router = useRouter(); // ✅ FIXED
 
-    useEffect(() => {
-        document.documentElement.classList.add("dark");
+
+    useEffect(() => {document.documentElement.classList.add("dark");
         document.body.classList.add(
-          "font-urbanist",
-          "text-base",
-          "text-black",
-          "dark:text-white",
-          "dark:bg-slate-900"
+            "font-urbanist",
+            "text-base",
+            "text-black",
+            "dark:text-white",
+            "dark:bg-slate-900"
         );
-        
-        // Check for registration success
-        const registered = searchParams?.get('registered');
-        if (registered === 'true') {
-            setSuccess('Registration successful! Please log in with your new account.');
-        }
-        
-        // Also check URL directly
-        if (window.location.href.includes('registered=true')) {
-            setSuccess('Registration successful! Please log in with your new account.');
-        }
-        
-        // Check referrer
-        if (document.referrer.includes('/signup')) {
-            setSuccess('Registration successful! Please log in with your new account.');
-        }
-    }, [searchParams]);
+
+        const registered = searchParams.get("registered");
+        if (registered) setSuccess("Account created successfully. You may now login.");}, [searchParams]);
     
-    const handleChange = (e) => {
-        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-        setFormData({
-            ...formData,
-            [e.target.name]: value
-        });
-    };
+    const handleChange = (e) => {const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value
+        }));};
     
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
-        
-        try {
-            const response = await fetch('/api/auth/login', {
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            setError('');
+            setSuccess('');
+          
+            console.log("🚀 Submitting login form...");
+          
+            try {
+              const res = await fetch('/api/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password
-                }),
-                credentials: 'include',
-            });
-            
-            const data = await response.json();
-            
-            if (!response.ok) {
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+              });
+          
+              console.log("📡 Response status:", res.status);
+              const data = await res.json();
+              console.log("📦 Response data:", data);
+          
+              if (!res.ok) {
                 throw new Error(data.message || 'Login failed');
+              }
+          
+              console.log("✅ Login successful, redirecting...");
+              window.location.href = 'http://3.148.159.251:3000';
+            } catch (err) {
+              console.error('❌ Login failed:', err.message);
+              setError(err.message || 'Something went wrong');
+            } finally {
+              setLoading(false);
             }
-            
-            // Success - redirect to home
-            window.location.href = '/';
-        } catch (err) {
-            console.error('Login error:', err);
-            setError(err.message || 'Invalid email or password');
-        } finally {
-            setLoading(false);
-        }
-    };
+          };
+          
+          
 
     return (
         <>

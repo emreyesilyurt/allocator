@@ -25,10 +25,13 @@ export default function Navbar() {
 
     async function fetchUser() {
         try {
-            const res = await fetch('/api/auth/check');
-            if (!res.ok) throw new Error("Unauthorized");
+            const res = await fetch('/api/auth/check', { credentials: 'include' });
             const data = await res.json();
-            setUser(data.user);
+            if (data.loggedIn) {
+                setUser(data.user);
+            } else {
+                setUser(null);
+            }
         } catch (err) {
             setUser(null);
         }
@@ -59,7 +62,6 @@ export default function Navbar() {
     return (
         <nav id="topnav" className="fixed top-0 inset-x-0 z-50 bg-white dark:bg-black transition-colors duration-300">
             <div className="container flex flex-wrap items-center justify-between">
-                {/* Logo */}
                 <Link className="logo flex items-center" href="/">
                     <Image src="/images/logo-icon-28.png" width={28} height={28} className="inline-block sm:hidden" alt="" />
                     <div className="sm:block hidden">
@@ -68,7 +70,6 @@ export default function Navbar() {
                     </div>
                 </Link>
 
-                {/* Navigation */}
                 <div className="hidden lg:flex items-center space-x-6 mx-auto">
                     <Link href="/aboutus" className="sub-menu-item text-sm font-medium">Services</Link>
                     <Link href="/blogs" className="sub-menu-item text-sm font-medium">Learn</Link>
@@ -85,9 +86,7 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Avatar + Try it Free */}
                 <div className="flex items-center gap-4">
-                    {/* Avatar */}
                     <div className="relative">
                         <button
                             onClick={() => openDropdown(!isDropdown)}
@@ -97,9 +96,7 @@ export default function Navbar() {
                             <FiUser className="w-5 h-5" />
                         </button>
 
-                        <div
-                            className={`dropdown-menu absolute right-0 mt-4 w-56 rounded-md bg-white dark:bg-slate-900 shadow-lg z-50 ${isDropdown ? 'hidden' : 'block'}`}
-                        >
+                        <div className={`dropdown-menu absolute right-0 mt-4 w-56 rounded-md bg-white dark:bg-slate-900 shadow-lg z-50 ${isDropdown ? 'hidden' : 'block'}`}>
                             <div className="relative">
                                 <div className="py-8 bg-gradient-to-tr from-violet-600 to-red-600" />
                                 <div className="absolute px-4 -bottom-7 left-0">
@@ -118,7 +115,7 @@ export default function Navbar() {
                                 <h5 className="font-semibold text-[15px]">Wallet:</h5>
                                 <div className="flex items-center justify-between">
                                     <span className="text-[13px] text-slate-400">
-                                        {user?.wallet?.slice(0, 6) + '...' + user?.wallet?.slice(-4) || '0x000...000'}
+                                        {user?.wallet ? `${user.wallet.slice(0, 6)}...${user.wallet.slice(-4)}` : '0x000...000'}
                                     </span>
                                     <Link href="#" className="text-violet-600"><AiOutlineCopy /></Link>
                                 </div>
@@ -149,7 +146,6 @@ export default function Navbar() {
                         </div>
                     </div>
 
-                    {/* CTA */}
                     <Link
                         href="/signup"
                         className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
