@@ -87,7 +87,8 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div className="relative">
+                    
+                    {/*<div className="relative">
                         <button
                             onClick={() => openDropdown(!isDropdown)}
                             className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 hover:bg-violet-700 text-white transition-colors"
@@ -145,14 +146,23 @@ export default function Navbar() {
                             </ul>
                         </div>
                     </div>
+                    */}
+
+                    <Link
+                        href="/login"
+                        className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
+                    >
+                        Login
+                    </Link>
 
                     <Link
                         href="/signup"
                         className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
                     >
-                        Try it Free
+                        Sign Up
                     </Link>
                 </div>
+             
             </div>
         </nav>
     );
