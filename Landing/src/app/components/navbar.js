@@ -7,17 +7,27 @@ import { LuSearch, LuSettings } from 'react-icons/lu';
 import { PiWalletBold } from "react-icons/pi";
 import { LiaSignOutAltSolid } from 'react-icons/lia';
 import { FiUser } from 'react-icons/fi';
+import { BiWallet } from 'react-icons/bi';
+import { MdOutlineSettings } from 'react-icons/md';
 
 export default function Navbar() {
-    const [isDropdown, openDropdown] = useState(true);
+    const [isDropdown, openDropdown] = useState(false);
     const [isOpen, setMenu] = useState(true);
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
             window.addEventListener("scroll", windowScroll);
             fetchUser();  // Fetch user session info
-            return () => window.removeEventListener("scroll", windowScroll);
+            
+            // Set up an interval to check session status periodically
+            const intervalId = setInterval(fetchUser, 5000); // Check every 5 seconds
+            
+            return () => {
+                window.removeEventListener("scroll", windowScroll);
+                clearInterval(intervalId);
+            };
         }
         window.scrollTo(0, 0);
         activateMenu();
@@ -25,7 +35,10 @@ export default function Navbar() {
 
     async function fetchUser() {
         try {
-            const res = await fetch('/api/auth/check', { credentials: 'include' });
+            const res = await fetch('/api/auth/check', { 
+                credentials: 'include',
+                cache: 'no-store'
+            });
             const data = await res.json();
             if (data.loggedIn) {
                 setUser(data.user);
@@ -33,7 +46,25 @@ export default function Navbar() {
                 setUser(null);
             }
         } catch (err) {
+            console.error('Failed to fetch user:', err);
             setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function handleLogout() {
+        try {
+            const res = await fetch('/api/auth/logout', { 
+                method: 'POST',
+                credentials: 'include' 
+            });
+            if (res.ok) {
+                setUser(null);
+                window.location.href = '/';
+            }
+        } catch (err) {
+            console.error('Logout error:', err);
         }
     }
 
@@ -87,80 +118,95 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    
-                    {/*<div className="relative">
-                        <button
-                            onClick={() => openDropdown(!isDropdown)}
-                            className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 hover:bg-violet-700 text-white transition-colors"
-                            type="button"
-                        >
-                            <FiUser className="w-5 h-5" />
-                        </button>
+                    {!loading && (
+                        <>
+                            {user ? (
+                                <>
+                                    <Link 
+                                        href="#" 
+                                        className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white"
+                                    >
+                                        <BiWallet className="w-4 h-4"/>
+                                    </Link>
 
-                        <div className={`dropdown-menu absolute right-0 mt-4 w-56 rounded-md bg-white dark:bg-slate-900 shadow-lg z-50 ${isDropdown ? 'hidden' : 'block'}`}>
-                            <div className="relative">
-                                <div className="py-8 bg-gradient-to-tr from-violet-600 to-red-600" />
-                                <div className="absolute px-4 -bottom-7 left-0">
-                                    <div className="flex items-end">
-                                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-white">
+                                    <div className="relative">
+                                        <button
+                                            onClick={() => openDropdown(!isDropdown)}
+                                            className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 hover:bg-violet-700 text-white transition-colors"
+                                            type="button"
+                                        >
                                             <FiUser className="w-5 h-5" />
+                                        </button>
+
+                                        <div className={`dropdown-menu absolute right-0 mt-4 w-56 rounded-md bg-white dark:bg-slate-900 shadow-lg z-50 ${isDropdown ? 'block' : 'hidden'}`}>
+                                            <div className="relative">
+                                                <div className="py-8 bg-gradient-to-tr from-violet-600 to-red-600" />
+                                                <div className="absolute px-4 -bottom-7 left-0">
+                                                    <div className="flex items-end">
+                                                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-white">
+                                                            <FiUser className="w-5 h-5" />
+                                                        </div>
+                                                        <span className="font-semibold text-[15px] ms-1">
+                                                            {user?.name || user?.email || "Guest"}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-10 px-4">
+                                                <h5 className="font-semibold text-[15px]">Wallet:</h5>
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-[13px] text-slate-400">
+                                                        {user?.wallet ? `${user.wallet.slice(0, 6)}...${user.wallet.slice(-4)}` : '0x000...000'}
+                                                    </span>
+                                                    <Link href="#" className="text-violet-600"><AiOutlineCopy /></Link>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-4 px-4">
+                                                <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{user?.balance || "0.00 ETH"}</span></h5>
+                                            </div>
+
+                                            <ul className="py-2 text-start">
+                                                <li>
+                                                    <Link href="http://localhost:3000/creator-profile" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600">
+                                                        <AiOutlineUser className="text-[16px] mr-2" /> Profile
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link href="http://localhost:3000/creator-profile-setting" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600">
+                                                        <MdOutlineSettings className="text-[16px] mr-2" /> Settings
+                                                    </Link>
+                                                </li>
+                                                <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                                <li>
+                                                    <button onClick={handleLogout} className="w-full flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600 text-left">
+                                                        <LiaSignOutAltSolid className="text-[16px] mr-2" /> Logout
+                                                    </button>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <span className="font-semibold text-[15px] ms-1">
-                                            {user?.name || user?.email || "Guest"}
-                                        </span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-10 px-4">
-                                <h5 className="font-semibold text-[15px]">Wallet:</h5>
-                                <div className="flex items-center justify-between">
-                                    <span className="text-[13px] text-slate-400">
-                                        {user?.wallet ? `${user.wallet.slice(0, 6)}...${user.wallet.slice(-4)}` : '0x000...000'}
-                                    </span>
-                                    <Link href="#" className="text-violet-600"><AiOutlineCopy /></Link>
-                                </div>
-                            </div>
-
-                            <div className="mt-4 px-4">
-                                <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{user?.balance || "0.00 ETH"}</span></h5>
-                            </div>
-
-                            <ul className="py-2 text-start">
-                                <li>
-                                    <Link href="/creator-profile" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600">
-                                        <AiOutlineUser className="text-[16px] mr-2" /> Profile
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        href="/login"
+                                        className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
+                                    >
+                                        Login
                                     </Link>
-                                </li>
-                                <li>
-                                    <Link href="/creator-profile-edit" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600">
-                                        <LuSettings className="text-[16px] mr-2" /> Settings
-                                    </Link>
-                                </li>
-                                <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
-                                <li>
-                                    <Link href="/login" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600">
-                                        <LiaSignOutAltSolid className="text-[16px] mr-2" /> Logout
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    */}
 
-                    <Link
-                        href="/login"
-                        className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
-                    >
-                        Login
-                    </Link>
-
-                    <Link
-                        href="/signup"
-                        className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
-                    >
-                        Sign Up
-                    </Link>
+                                    <Link
+                                        href="/signup"
+                                        className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </>
+                            )}
+                        </>
+                    )}
                 </div>
              
             </div>

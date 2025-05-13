@@ -1,18 +1,29 @@
-// Import cookie module correctly
-import * as cookie from 'cookie';
+import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
 
 export default async function handler(req, res) {
-  // Get the cookie from the request
-  const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
-  const isLoggedIn = cookies.loggedIn === 'true';
-  
-  if (!isLoggedIn) {
+  try {
+    const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+    const token = cookies.token;
+
+    if (!token) {
+      return res.status(200).json({ loggedIn: false });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    return res.status(200).json({
+      loggedIn: true,
+      user: {
+        id: decoded.id,
+        name: decoded.name,
+        email: decoded.email,
+        wallet: decoded.wallet,
+        balance: decoded.balance,
+      }
+    });
+  } catch (error) {
+    console.error('Auth check error:', error);
     return res.status(200).json({ loggedIn: false });
   }
-  
-  // For more security, you could add a session table and validate the session ID
-  // This is a simplified version for the current setup
-  return res.status(200).json({ 
-    loggedIn: true
-  });
 }

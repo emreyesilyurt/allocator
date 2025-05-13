@@ -14,127 +14,174 @@ import {MdOutlineSettings} from 'react-icons/md'
 export default function Topnav({setToggle, toggle}){
     const [notification, setNotification] = useState(false);
     const [userData, setUserData] = useState(false);
+    const [userDetails, setUserDetails] = useState(null);
 
-    useEffect(()=>{
-        let handlar = ()=>{
+    useEffect(() => {
+        fetchUser();
+        
+        let handlar = () => {
             setNotification(false)
         }
         let user = () => {
             setUserData(false)
         }
-       document.addEventListener("mousedown", handlar)
-       document.addEventListener("mousedown", user)
-    },[])
+        document.addEventListener("mousedown", handlar)
+        document.addEventListener("mousedown", user)
+        
+        return () => {
+            document.removeEventListener("mousedown", handlar)
+            document.removeEventListener("mousedown", user)
+        }
+    }, [])
 
-    const notificationtoggle = ()=>{
+    async function fetchUser() {
+        try {
+            const res = await fetch('http://localhost:3001/api/auth/check', { 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await res.json();
+            if (data.loggedIn) {
+                setUserDetails(data.user);
+            } else {
+                // If not logged in, redirect to landing page
+                window.location.href = 'http://localhost:3001/login';
+            }
+        } catch (err) {
+            console.error('Failed to fetch user:', err);
+            window.location.href = 'http://localhost:3001/login';
+        }
+    }
+
+    async function handleLogout() {
+        try {
+            const res = await fetch('http://localhost:3001/api/auth/logout', { 
+                method: 'POST',
+                credentials: 'include' 
+            });
+            if (res.ok) {
+                window.location.href = 'http://localhost:3001/';
+            }
+        } catch (err) {
+            console.error('Logout error:', err);
+        }
+    }
+
+    const notificationtoggle = () => {
         setNotification(!notification)
     }
-    const userHandler = () =>{
+    
+    const userHandler = () => {
         setUserData(!userData)
     }
-  const toggleHandler = () => {
-    setToggle(!toggle)
-  }
-  const metamask = async () => {
-    try {
-        //Basic Actions Section
-        const onboardButton = document.getElementById('connectWallet')
+    
+    const toggleHandler = () => {
+        setToggle(!toggle)
+    }
+    
+    const metamask = async () => {
+        try {
+            //Basic Actions Section
+            const onboardButton = document.getElementById('connectWallet')
 
-        //   metamask modal
-        const modal = document.getElementById('modal-metamask')
-        const closeModalBtn = document.getElementById('close-modal')
+            //   metamask modal
+            const modal = document.getElementById('modal-metamask')
+            const closeModalBtn = document.getElementById('close-modal')
 
-        //   wallet address
-        const myPublicAddress = document.getElementById('myPublicAddress')
+            //   wallet address
+            const myPublicAddress = document.getElementById('myPublicAddress')
 
-        //Created check function to see if the MetaMask extension is installed
-        const isMetaMaskInstalled = () => {
-            //Have to check the ethereum binding on the window object to see if it's installed
-            const { ethereum } = window
-            return Boolean(ethereum && ethereum.isMetaMask)
-        }
-
-        const onClickConnect = async () => {
-            if (!isMetaMaskInstalled()) {
-                //meta mask not installed
-                modal.classList.add('show')
-                modal.style.display = 'block'
-                return
+            //Created check function to see if the MetaMask extension is installed
+            const isMetaMaskInstalled = () => {
+                //Have to check the ethereum binding on the window object to see if it's installed
+                const { ethereum } = window
+                return Boolean(ethereum && ethereum.isMetaMask)
             }
-            try {
-                // eslint-disable-next-line no-undef
-                await ethereum.request({ method: 'eth_requestAccounts' })
+
+            const onClickConnect = async () => {
+                if (!isMetaMaskInstalled()) {
+                    //meta mask not installed
+                    modal.classList.add('show')
+                    modal.style.display = 'block'
+                    return
+                }
+                try {
+                    // eslint-disable-next-line no-undef
+                    await ethereum.request({ method: 'eth_requestAccounts' })
+                    // eslint-disable-next-line no-undef
+                    const accounts = await ethereum.request({ method: 'eth_accounts' })
+                    myPublicAddress.innerHTML =
+                        accounts[0].split('').slice(0, 6).join('') +
+                        '...' +
+                        accounts[0]
+                            .split('')
+                            .slice(accounts[0].length - 7, accounts[0].length)
+                            .join('')
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+
+            const closeModal = () => {
+                modal.classList.remove('show')
+                modal.style.display = 'none'
+            }
+
+            if (isMetaMaskInstalled()) {
                 // eslint-disable-next-line no-undef
                 const accounts = await ethereum.request({ method: 'eth_accounts' })
-                myPublicAddress.innerHTML =
-                    accounts[0].split('').slice(0, 6).join('') +
-                    '...' +
-                    accounts[0]
-                        .split('')
-                        .slice(accounts[0].length - 7, accounts[0].length)
-                        .join('')
-            } catch (error) {
-                console.error(error)
+                if (!!accounts[0]) {
+                    myPublicAddress.innerHTML =
+                        accounts[0].split('').slice(0, 6).join('') +
+                        '...' +
+                        accounts[0]
+                            .split('')
+                            .slice(accounts[0].length - 7, accounts[0].length)
+                            .join('')
+                }
             }
-        }
 
-        const closeModal = () => {
-            modal.classList.remove('show')
-            modal.style.display = 'none'
-        }
-
-        if (isMetaMaskInstalled()) {
-            // eslint-disable-next-line no-undef
-            const accounts = await ethereum.request({ method: 'eth_accounts' })
-            if (!!accounts[0]) {
-                myPublicAddress.innerHTML =
-                    accounts[0].split('').slice(0, 6).join('') +
-                    '...' +
-                    accounts[0]
-                        .split('')
-                        .slice(accounts[0].length - 7, accounts[0].length)
-                        .join('')
-            }
-        }
-
-        onboardButton.addEventListener('click', onClickConnect)
-        closeModalBtn.addEventListener('click', closeModal)
-    } catch (error) { }
-}
+            onboardButton.addEventListener('click', onClickConnect)
+            closeModalBtn.addEventListener('click', closeModal)
+        } catch (error) { }
+    }
+    
     return(
-          <div className="top-header bg-white dark:bg-black">
-              <div className="header-bar flex justify-between">
-                  <div className="flex items-center space-x-1">
-                      <Link href="#" className="xl:hidden block me-2">
-                          <Image src="/images/logo-icon-32.png" width={32} height={32} placeholder="empty" className="md:hidden block" alt=""/>
-                          <span className="md:block hidden">
-                              <Image src="/images/logo-dark.png" width={116} height={28} placeholder="empty" className="inline-block dark:hidden" alt=""/>
-                              <Image src="/images/logo-light.png" width={116} height={28} placeholder="empty" className="hidden dark:inline-block" alt=""/>
-                          </span>
-                      </Link>
-                      <Link href="#" id="close-sidebar" className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white">
-                          <Menu className="size-4" onClick={toggleHandler}/>
-                      </Link>
-                      <div className="ps-1.5">
-                          <div className="form-icon relative sm:block hidden">
-                              <LuSearch className="absolute top-1/2 -translate-y-1/2 start-3"/>
-                              <input type="text" className="form-input w-56 ps-9 py-2 px-3 h-8 bg-transparent dark:bg-black dark:text-slate-200 rounded-md outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 bg-white" name="s" id="searchItem" placeholder="Search..."/>
-                          </div>
-                      </div>
-                  </div>
+        <div className="top-header bg-white dark:bg-black">
+            <div className="header-bar flex justify-between">
+                <div className="flex items-center space-x-1">
+                    <Link href="#" className="xl:hidden block me-2">
+                        <Image src="/images/logo-icon-32.png" width={32} height={32} placeholder="empty" className="md:hidden block" alt=""/>
+                        <span className="md:block hidden">
+                            <Image src="/images/logo-dark.png" width={116} height={28} placeholder="empty" className="inline-block dark:hidden" alt=""/>
+                            <Image src="/images/logo-light.png" width={116} height={28} placeholder="empty" className="hidden dark:inline-block" alt=""/>
+                        </span>
+                    </Link>
+                    <Link href="#" id="close-sidebar" className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white">
+                        <Menu className="size-4" onClick={toggleHandler}/>
+                    </Link>
+                    <div className="ps-1.5">
+                        <div className="form-icon relative sm:block hidden">
+                            <LuSearch className="absolute top-1/2 -translate-y-1/2 start-3"/>
+                            <input type="text" className="form-input w-56 ps-9 py-2 px-3 h-8 bg-transparent dark:bg-black dark:text-slate-200 rounded-md outline-none border border-gray-100 dark:border-gray-800 focus:ring-0 bg-white" name="s" id="searchItem" placeholder="Search..."/>
+                        </div>
+                    </div>
+                </div>
 
-                  <ul className="list-none mb-0 space-x-1">
-                      <li className="dropdown inline-block relative">
-                          <button data-dropdown-toggle="dropdown" className="dropdown-toggle btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white" type="button" onClick={notificationtoggle}>
-                               <Bell className="size-4"/>
-                              <span className="absolute top-0 end-0 flex items-center justify-center bg-emerald-600 text-white text-[10px] font-bold rounded-full size-2 after:content-[''] after:absolute after:h-2 after:w-2 after:bg-emerald-600 after:top-0 after:end-0 after:rounded-full after:animate-ping"></span>
-                          </button>
-                          <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 w-64 rounded-md overflow-hidden bg-white dark:bg-black shadow dark:shadow-gray-700 ${notification ? "block" : "hidden"}`}>
-                              <span className="px-4 py-4 flex justify-between">
-                                  <span className="font-semibold">Notifications</span>
-                                  <span className="flex items-center justify-center bg-emerald-600/20 text-emerald-600 text-[10px] font-bold rounded-full w-5 max-h-5 ms-1">3</span>
-                              </span>
-                              <SimpleBarReact className='h-64'>
+                <ul className="list-none mb-0 space-x-1">
+                    <li className="dropdown inline-block relative">
+                        <button data-dropdown-toggle="dropdown" className="dropdown-toggle btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white" type="button" onClick={notificationtoggle}>
+                             <Bell className="size-4"/>
+                            <span className="absolute top-0 end-0 flex items-center justify-center bg-emerald-600 text-white text-[10px] font-bold rounded-full size-2 after:content-[''] after:absolute after:h-2 after:w-2 after:bg-emerald-600 after:top-0 after:end-0 after:rounded-full after:animate-ping"></span>
+                        </button>
+                        <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 w-64 rounded-md overflow-hidden bg-white dark:bg-black shadow dark:shadow-gray-700 ${notification ? "block" : "hidden"}`}>
+                            <span className="px-4 py-4 flex justify-between">
+                                <span className="font-semibold">Notifications</span>
+                                <span className="flex items-center justify-center bg-emerald-600/20 text-emerald-600 text-[10px] font-bold rounded-full w-5 max-h-5 ms-1">3</span>
+                            </span>
+                            <SimpleBarReact className='h-64'>
                                 <ul className="py-2 text-start h-64 border-t border-gray-100 dark:border-gray-800" >
                                     <li>
                                         <Link href="#"  className="block font-medium py-1.5 px-4">
@@ -198,56 +245,56 @@ export default function Topnav({setToggle, toggle}){
                                         </Link>
                                     </li>
                                 </ul>
-                              </SimpleBarReact>
-                          </div>
-                      </li>
-                      <li className="inline-block mb-0">
-                          <Link href="#" onClick={metamask} id="connectWallet" className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white"><BiWallet/></Link>
-                      </li>
-                      <li className="dropdown inline-block relative">
-                          <button data-dropdown-toggle="dropdown" className="dropdown-toggle items-center" type="button">
-                              <span className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white" onClick={userHandler}><Image src="/images/client/05.jpg" width={30} height={30} className="rounded-full" alt=""/></span>
-                          </button>
-                          <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-black shadow dark:shadow-gray-800 ${userData ? "block" : "hidden"}`} >
-                              <div className="relative">
-                                  <div className="py-8 bg-gradient-to-tr from-violet-600 to-red-600"></div>
-                                  <div className="absolute px-4 -bottom-7 start-0">
-                                      <div className="flex items-end">
-                                          <Image src="/images/client/05.jpg" width={40} height={40} className="rounded-full size-10 shadow dark:shadow-gray-700" alt=""/>
+                            </SimpleBarReact>
+                        </div>
+                    </li>
+                    <li className="inline-block mb-0">
+                        <Link href="#" onClick={metamask} id="connectWallet" className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white"><BiWallet/></Link>
+                    </li>
+                    <li className="dropdown inline-block relative">
+                        <button data-dropdown-toggle="dropdown" className="dropdown-toggle items-center" type="button">
+                            <span className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white" onClick={userHandler}><Image src="/images/client/05.jpg" width={30} height={30} className="rounded-full" alt=""/></span>
+                        </button>
+                        <div className={`dropdown-menu absolute end-0 m-0 mt-4 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-black shadow dark:shadow-gray-800 ${userData ? "block" : "hidden"}`} >
+                            <div className="relative">
+                                <div className="py-8 bg-gradient-to-tr from-violet-600 to-red-600"></div>
+                                <div className="absolute px-4 -bottom-7 start-0">
+                                    <div className="flex items-end">
+                                        <Image src="/images/client/05.jpg" width={40} height={40} className="rounded-full size-10 shadow dark:shadow-gray-700" alt=""/>
 
-                                          <span className="font-semibold text-[15px] ms-1">{userInfo?.name || "Guest"}</span>
-                                      </div>
-                                  </div>
-                              </div>
+                                        <span className="font-semibold text-[15px] ms-1">{userDetails?.name || "Guest"}</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                              <div className="mt-10 px-4">
-                                  <h5 className="font-semibold text-[15px]">Wallet:</h5>
-                                  <div className="flex items-center justify-between">
-                                      <span className="text-[13px] text-slate-400">{userInfo?.wallet || "—"}</span>
-                                      <Link href="#" className="text-violet-600"><BiWallet/></Link>
-                                  </div>
-                              </div>
+                            <div className="mt-10 px-4">
+                                <h5 className="font-semibold text-[15px]">Wallet:</h5>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[13px] text-slate-400">{userDetails?.wallet || "—"}</span>
+                                    <Link href="#" className="text-violet-600"><BiWallet/></Link>
+                                </div>
+                            </div>
 
-                              <div className="mt-4 px-4">
-                                  <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{userInfo?.balance || "0.00 ETH"}</span></h5>
-                              </div>
+                            <div className="mt-4 px-4">
+                                <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{userDetails?.balance || "0.00 ETH"}</span></h5>
+                            </div>
 
-                              <ul className="py-2 text-start">
-                                  <li>
-                                      <Link href="/creator-profile" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600"><AiOutlineUser className="text-[16px] align-middle me-1"/> Profile</Link>
-                                  </li>
-                                  <li>
-                                      <Link href="/creator-profile-setting" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600"><MdOutlineSettings className="text-[16px] align-middle me-1"/> Settings</Link>
-                                  </li>
-                                  <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
-                                  <li>
-                                      <Link href="/login" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600"><AiOutlineLogout className="text-[16px] align-middle me-1"/> Logout</Link>
-                                  </li>
-                              </ul>
-                          </div>
-                      </li>
-                  </ul>
-              </div>
-          </div>
+                            <ul className="py-2 text-start">
+                                <li>
+                                    <Link href="/creator-profile" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600"><AiOutlineUser className="text-[16px] align-middle me-1"/> Profile</Link>
+                                </li>
+                                <li>
+                                    <Link href="/creator-profile-setting" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600"><MdOutlineSettings className="text-[16px] align-middle me-1"/> Settings</Link>
+                                </li>
+                                <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                                <li>
+                                    <button onClick={handleLogout} className="w-full flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600 text-left"><AiOutlineLogout className="text-[16px] align-middle me-1"/> Logout</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     )
 }

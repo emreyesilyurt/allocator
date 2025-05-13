@@ -1,7 +1,12 @@
-import cookie from 'cookie';
+import { serialize } from 'cookie';
 
 export default async function handler(req, res) {
-  res.setHeader('Set-Cookie', cookie.serialize('token', '', {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
+
+  // Clear the JWT cookie by setting it to expire immediately
+  res.setHeader('Set-Cookie', serialize('token', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'Lax',
@@ -9,5 +14,5 @@ export default async function handler(req, res) {
     expires: new Date(0), // Expire immediately
   }));
   
-  res.status(200).json({ message: 'Logged out' });
+  return res.status(200).json({ message: 'Logged out successfully' });
 }
