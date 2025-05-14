@@ -7,52 +7,32 @@ export async function middleware(request) {
         request.nextUrl.pathname.startsWith('/_next') ||
         request.nextUrl.pathname.startsWith('/api') ||
         request.nextUrl.pathname.startsWith('/images') ||
-        request.nextUrl.pathname.includes('.') ||
-        request.nextUrl.pathname === '/favicon.ico'
+        request.nextUrl.pathname.includes('.')
     ) {
         return NextResponse.next();
     }
 
     try {
-        // Get the cookie from the request
-        const token = request.cookies.get('token');
-        
-        if (!token) {
-            // No token, redirect to login
-            return NextResponse.redirect('http://localhost:3001/login');
-        }
-
-        // Token exists, let's verify it with the auth endpoint
+        // Check authentication by calling the Landing auth check endpoint
         const authCheckUrl = 'http://localhost:3001/api/auth/check';
         const authResponse = await fetch(authCheckUrl, {
-            method: 'GET',
             headers: {
-                'Cookie': `token=${token.value}`,
-                'Content-Type': 'application/json',
+                cookie: request.headers.get('cookie') || '',
             },
         });
-
-        if (!authResponse.ok) {
-            throw new Error('Auth check failed');
-        }
 
         const authData = await authResponse.json();
 
         if (!authData.loggedIn) {
-            // Not authenticated, redirect to login
+            // Redirect to login page if not authenticated
             return NextResponse.redirect('http://localhost:3001/login');
         }
 
-        // User is authenticated, allow access
-        const response = NextResponse.next();
-        
-        // Add the user data to the response headers so pages can access it
-        response.headers.set('x-user-data', JSON.stringify(authData.user));
-        
-        return response;
+        // Continue to the requested page if authenticated
+        return NextResponse.next();
     } catch (error) {
         console.error('Auth middleware error:', error);
-        // On error, redirect to login
+        // Redirect to login on error
         return NextResponse.redirect('http://localhost:3001/login');
     }
 }
@@ -66,8 +46,7 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          * - public folder
-         * - images folder
          */
-        '/((?!api|_next/static|_next/image|favicon.ico|public|images).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
     ],
 };

@@ -1,5 +1,4 @@
 "use client"; // This is a client component 👈🏽
-import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,22 +8,22 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 
-//const Navbar = dynamic(() => import('./components/navbar'));
-const Navbar = dynamic(() => import('./components/navbar'));
-const Footer = dynamic(() => import('./components/footer'));
-const Switcher = dynamic(() => import('./components/switcher'));
-const CreatorThree = dynamic(() => import('./components/creator-three'));
-const QA = dynamic(() => import('./components/qa'));
-const ExploreTtem = dynamic(() => import('./components/explore-item'));
-const Feature = dynamic(() => import('./components/feature'));
-const Creator = dynamic(() => import('./components/creator'));
-const Blog = dynamic(() => import('./components/blog'));
-const GetTouch = dynamic(() => import('./components/get-touch'));
-const WhoItsFor = dynamic(() => import('./components/who-its-for'));
-const HeadLine = dynamic(() => import('./components/headline'));
+// Import components directly instead of dynamically to avoid CSS loading issues
+import Navbar from './components/navbar';
+import Footer from './components/footer';
+import Switcher from './components/switcher';
+import CreatorThree from './components/creator-three';
+import QA from './components/qa';
+import ExploreTtem from './components/explore-item';
+import Feature from './components/feature';
+import Creator from './components/creator';
+import Blog from './components/blog';
+import GetTouch from './components/get-touch';
+import WhoItsFor from './components/who-its-for';
+import HeadLine from './components/headline';
+import DashboardDemoVideo from './components/demo-video';
 
 import { walletData } from './data/data';
-import DashboardDemoVideo from './components/demo-video'
 
 export default function IndexFive() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -121,7 +120,6 @@ export default function IndexFive() {
             {loggedIn && (
                 <div className="text-center text-white bg-green-700 py-2">✅ You are logged in</div>
             )}
-
 
             <section className="relative w-full h-screen overflow-hidden">
                 {/* Base layer - FORCED pure black in dark mode */}

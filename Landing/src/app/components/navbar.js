@@ -10,23 +10,22 @@ import { FiUser } from 'react-icons/fi';
 import { BiWallet } from 'react-icons/bi';
 import { MdOutlineSettings } from 'react-icons/md';
 
+// Avoid dynamic imports for navbar components to prevent CSS loading issues
 export default function Navbar() {
     const [isDropdown, openDropdown] = useState(false);
     const [isOpen, setMenu] = useState(true);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+        fetchUser();
+        
         if (typeof window !== "undefined") {
             window.addEventListener("scroll", windowScroll);
-            fetchUser();  // Fetch user session info
-            
-            // Set up an interval to check session status periodically
-            const intervalId = setInterval(fetchUser, 5000); // Check every 5 seconds
-            
             return () => {
                 window.removeEventListener("scroll", windowScroll);
-                clearInterval(intervalId);
             };
         }
         window.scrollTo(0, 0);
@@ -37,9 +36,18 @@ export default function Navbar() {
         try {
             const res = await fetch('/api/auth/check', { 
                 credentials: 'include',
-                cache: 'no-store'
+                cache: 'no-store',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             });
+            
+            if (!res.ok) {
+                throw new Error('Auth check failed');
+            }
+            
             const data = await res.json();
+            
             if (data.loggedIn) {
                 setUser(data.user);
             } else {
@@ -57,8 +65,12 @@ export default function Navbar() {
         try {
             const res = await fetch('/api/auth/logout', { 
                 method: 'POST',
-                credentials: 'include' 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             });
+            
             if (res.ok) {
                 setUser(null);
                 window.location.href = '/';
@@ -70,10 +82,12 @@ export default function Navbar() {
 
     function windowScroll() {
         const navbar = document.getElementById("topnav");
-        if (document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50) {
-            navbar?.classList.add("nav-sticky");
-        } else {
-            navbar?.classList.remove("nav-sticky");
+        if (navbar) {
+            if (document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50) {
+                navbar.classList.add("nav-sticky");
+            } else {
+                navbar.classList.remove("nav-sticky");
+            }
         }
     }
 
@@ -89,6 +103,11 @@ export default function Navbar() {
             }
         }
     };
+
+    // Don't render until mounted to avoid hydration issues
+    if (!mounted) {
+        return null;
+    }
 
     return (
         <nav id="topnav" className="fixed top-0 inset-x-0 z-50 bg-white dark:bg-black transition-colors duration-300">
@@ -157,7 +176,9 @@ export default function Navbar() {
                                                 <h5 className="font-semibold text-[15px]">Wallet:</h5>
                                                 <div className="flex items-center justify-between">
                                                     <span className="text-[13px] text-slate-400">
-                                                        {user?.wallet ? `${user.wallet.slice(0, 6)}...${user.wallet.slice(-4)}` : '0x000...000'}
+                                                        {user?.wallet && user.wallet !== '0x0000000000000000000000000000000000000000' 
+                                                            ? `${user.wallet.slice(0, 6)}...${user.wallet.slice(-4)}` 
+                                                            : 'Not connected'}
                                                     </span>
                                                     <Link href="#" className="text-violet-600"><AiOutlineCopy /></Link>
                                                 </div>

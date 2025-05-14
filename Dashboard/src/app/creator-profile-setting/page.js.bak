@@ -1,0 +1,336 @@
+'use client'
+import React,{ useState}  from "react";
+import Link from "next/link";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Navbar = dynamic(() => import('../components/navbar'))
+const Topnav = dynamic(() => import('../components/topnav'))
+const Switcher = dynamic(() => import('../components/switcher'))
+const Footer = dynamic(() => import('../components/footer'))
+
+import {Facebook, Twitter, Instagram, Linkedin,Youtube} from 'react-feather'
+
+export default function CreatorProfileSetting(){
+    const[toggle, setToggle] = useState(true)
+
+    const [file, setFile] = useState("/images/blog/single.jpg" );
+    const [profile, setProfile] = useState("/images/avatar/1.jpg")
+
+    function handleChange(e) {
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+    function ProfileChange(e) {
+        setProfile(URL.createObjectURL(e.target.files[0]))
+    }
+  
+    return(
+        <>
+        <div className={`page-wrapper  ${toggle ? "toggled" : ""}`}>
+            <Navbar/>
+            <main className='page-content bg-gray-50 dark:bg-slate-800'>
+
+                <Topnav toggle={toggle} setToggle={setToggle}/>
+                <div className="container-fluid relative px-3">
+                    <div className="layout-specing">
+                        <div className="md:flex justify-between items-center">
+                            <h5 className="text-lg font-semibold">Profile Setting</h5>
+
+                            <ul className="breadcrumb tracking-[0.5px] mb-0 inline-block mt-1 md:mt-0">
+                                <li className="inline breadcrumb-item text-[15px] font-semibold duration-500 text-slate-400 dark:text-white/60 hover:text-slate-900 dark:hover:text-white"><Link href="/">Giglink</Link></li>
+                                <li className="inline breadcrumb-item text-[15px] font-semibold duration-500 text-slate-900 dark:text-white" aria-current="page">Profile Setting</li>
+                            </ul>
+                        </div>
+
+                        <div className="container-fluid mt-6">
+                            <div className="group profile-banner relative overflow-hidden text-transparent rounded-xl shadow dark:shadow-gray-700">
+                                <input id="pro-banner" name="profile-banner" type="file" className="hidden" onChange={handleChange}/>
+                                <div className="relative shrink-0">
+                                    <Image src={file} width={0} height={0} sizes="100vw" placeholder="blur" blurDataURL="/images/blog/single.jpg" className="h-80 w-full object-cover bg-white dark:bg-slate-900" id="profile-banner" alt=""/>
+                                    <div className="absolute inset-0 bg-slate/10 group-hover:bg-slate-900/40 transition duration-500"></div>
+                                    <label className="absolute inset-0 cursor-pointer" htmlFor="pro-banner" ></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-12 gap-6 mt-6">
+                            <div className="lg:col-span-3 md:col-span-4">
+                                <div className="pt-4 px-4 -mt-20">
+                                    <div className="group profile-pic w-[112px]">
+                                        <input id="pro-img" name="profile-image" type="file" className="hidden" onChange={ProfileChange} />
+                                        <div>
+                                            <div className="relative size-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
+                                                <Image src={profile} width={112} height={112} placeholder="blur" blurDataURL="/images/avatar/1.jpg" className="rounded-full bg-white dark:bg-slate-900" id="profile-image" alt=""/>
+                                                <div className="absolute inset-0 group-hover:bg-slate-900/40 transition duration-500"></div>
+                                                <label className="absolute inset-0 cursor-pointer" htmlFor="pro-img" ></label>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <p className="text-slate-400 mt-3">We recommend an image of at least 400X400. GIFs work too.</p>
+                                </div>
+                            </div>
+                            
+                            <div className="lg:col-span-9 md:col-span-8">
+                                <div className="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+                                    <h5 className="text-lg font-semibold mb-4">Personal Detail :</h5>
+                                    <form>
+                                        <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
+                                            <div>
+                                                <label className="form-label font-medium">First Name : <span className="text-red-600">*</span></label>
+                                                <input type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="First Name:" id="firstname" name="name" required=""/>
+                                            </div>
+                                            <div>
+                                                <label className="form-label font-medium">Last Name : <span className="text-red-600">*</span></label>
+                                                <input type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Last Name:" id="lastname" name="name" required=""/>
+                                            </div>
+                                            <div>
+                                                <label className="form-label font-medium">Your Email : <span className="text-red-600">*</span></label>
+                                                <input type="email" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Email" name="email" required=""/>
+                                            </div>
+                                            <div>
+                                                <label className="form-label font-medium">Occupation : </label>
+                                                <input name="name" id="occupation" type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Occupation :"/>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-1">
+                                            <div className="mt-5">
+                                                <label className="form-label font-medium">Description : </label>
+                                                <textarea name="comments" id="comments" className="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-2xl outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Message :"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <input type="submit" id="submit" name="send" className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full mt-5" value="Save Changes"/>
+                                    </form>
+                                </div>
+
+                                <div className="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 mt-[30px]">
+                                    <h5 className="text-lg font-semibold mb-6">Social Profiles :</h5>
+                                    
+                                    <div className="md:flex">
+                                        <div className="md:w-1/3">
+                                            <span className="font-medium">Twitter</span>
+                                        </div>
+
+                                        <div className="md:w-2/3 mt-4 md:mt-0">
+                                            <form>
+                                                <div className="form-icon relative">
+                                                    <Twitter className="size-4 absolute top-3 start-4"/>
+                                                    <input type="text" className="form-input w-full text-[15px] ps-12 py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0" placeholder="Twitter Profile Name" id="twitter_name" name="name" required=""/>
+                                                </div>
+                                            </form>
+
+                                            <p className="text-slate-400 mt-1">Add your Twitter username (e.g. jennyhot).</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="md:flex mt-8">
+                                        <div className="md:w-1/3">
+                                            <span className="font-medium">Facebook</span>
+                                        </div>
+
+                                        <div className="md:w-2/3 mt-4 md:mt-0">
+                                            <form>
+                                                <div className="form-icon relative">
+                                                    <Facebook className="size-4 absolute top-3 start-4"/>
+                                                    <input type="text" className="form-input w-full text-[15px] ps-12 py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0" placeholder="Facebook Profile Name" id="facebook_name" name="name" required=""/>
+                                                </div>
+                                            </form>
+
+                                            <p className="text-slate-400 mt-1">Add your Facebook username (e.g. jennyhot).</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="md:flex mt-8">
+                                        <div className="md:w-1/3">
+                                            <span className="font-medium">Instagram</span>
+                                        </div>
+
+                                        <div className="md:w-2/3 mt-4 md:mt-0">
+                                            <form>
+                                                <div className="form-icon relative">
+                                                    <Instagram className="size-4 absolute top-3 start-4"/>
+                                                    <input type="text" className="form-input w-full text-[15px] ps-12 py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0" placeholder="Instagram Profile Name" id="insta_name" name="name" required=""/>
+                                                </div>
+                                            </form>
+
+                                            <p className="text-slate-400 mt-1">Add your Instagram username (e.g. jennyhot).</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="md:flex mt-8">
+                                        <div className="md:w-1/3">
+                                            <span className="font-medium">Linkedin</span>
+                                        </div>
+
+                                        <div className="md:w-2/3 mt-4 md:mt-0">
+                                            <form>
+                                                <div className="form-icon relative">
+                                                    <Linkedin className="size-4 absolute top-3 start-4"/>
+                                                    <input type="text" className="form-input w-full text-[15px] ps-12 py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0" placeholder="Linkedin Profile Name" id="linkedin_name" name="name" required=""/>
+                                                </div>
+                                            </form>
+
+                                            <p className="text-slate-400 mt-1">Add your Linkedin username.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="md:flex mt-8">
+                                        <div className="md:w-1/3">
+                                            <span className="font-medium">Youtube</span>
+                                        </div>
+
+                                        <div className="md:w-2/3 mt-4 md:mt-0">
+                                            <form>
+                                                <div className="form-icon relative">
+                                                    <Youtube className="size-4 absolute top-3 start-4"/>
+                                                    <input type="url" className="form-input w-full text-[15px] ps-12 py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0" placeholder="Youtube url" id="you_url" name="url" required=""/>
+                                                </div>
+                                            </form>
+
+                                            <p className="text-slate-400 mt-1">Add your Youtube url.</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="md:flex">
+                                        <div className="md:w-full">
+                                            <span className="font-medium"></span>
+                                            <button className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full mt-5">Save Social Profile</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 mt-[30px]">
+                                    <h5 className="text-lg font-semibold mb-6">Account Notifications :</h5>
+
+                                    <div className="flex justify-between pb-4">
+                                        <h6 className="mb-0 font-medium">When someone mentions me</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" id="noti1"/>
+                                            <label className="form-check-label"></label>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between py-4 border-t border-gray-100 dark:border-gray-700">
+                                        <h6 className="mb-0 font-medium">When someone follows me</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" defaultChecked id="noti2"/>
+                                            <label className="form-check-label"></label>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between py-4 border-t border-gray-100 dark:border-gray-700">
+                                        <h6 className="mb-0 font-medium">When shares my activity</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" id="noti3"/>
+                                            <label className="form-check-label"></label>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between py-4 border-t border-gray-100 dark:border-gray-700">
+                                        <h6 className="mb-0 font-medium">When someone messages me</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" id="noti4"/>
+                                            <label className="form-check-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 mt-[30px]">
+                                    <h5 className="text-lg font-semibold mb-6">Marketing Notifications :</h5>
+
+                                    <div className="flex justify-between pb-4">
+                                        <h6 className="mb-0 font-medium">There is a sale or promotion</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" id="noti5"/>
+                                            <label className="form-check-label" ></label>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between py-4 border-t border-gray-100 dark:border-gray-700">
+                                        <h6 className="mb-0 font-medium">Company news</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" id="noti6"/>
+                                            <label className="form-check-label" ></label>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between py-4 border-t border-gray-100 dark:border-gray-700">
+                                        <h6 className="mb-0 font-medium">Weekly jobs</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" defaultChecked id="noti7"/>
+                                            <label className="form-check-label" ></label>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between py-4 border-t border-gray-100 dark:border-gray-700">
+                                        <h6 className="mb-0 font-medium">Unsubscribe News</h6>
+                                        <div className="">
+                                            <input className="form-checkbox rounded border-gray-200 dark:border-gray-800 text-violet-600 focus:border-violet-600/30 focus:ring focus:ring-offset-0 focus:ring-violet-600/20 focus:ring-opacity-50" type="checkbox" value="" defaultChecked id="noti8"/>
+                                            <label className="form-check-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 mt-[30px]">
+                                    <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
+                                        <div>
+                                            <h5 className="text-lg font-semibold mb-5">Contact Info :</h5>
+
+                                            <form>
+                                                <div className="grid grid-cols-1 gap-5">
+                                                    <div>
+                                                        <label className="form-label font-medium">Phone No. :</label>
+                                                        <input name="number" id="number" type="number" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Phone :" />
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="form-label font-medium">Website :</label>
+                                                        <input name="url" id="url" type="url" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Url :"/>
+                                                    </div>
+                                                </div>
+
+                                                <button className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full mt-5">Add</button>
+                                            </form>
+                                        </div>
+                                        
+                                        <div> 
+                                            <h5 className="text-lg font-semibold mb-5">Change password :</h5>
+                                            <form>
+                                                <div className="grid grid-cols-1 gap-5">
+                                                    <div>
+                                                        <label className="form-label font-medium">Old password :</label>
+                                                        <input type="password" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Old password" required="" />
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="form-label font-medium">New password :</label>
+                                                        <input type="password" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="New password" required="" />
+                                                    </div>
+
+                                                    <div>
+                                                        <label className="form-label font-medium">Re-type New password :</label>
+                                                        <input type="password" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Re-type New password" required=""/>
+                                                    </div>
+                                                </div>
+
+                                                <button className="btn bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white rounded-full mt-5">Save password</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 mt-[30px]">
+                                    <h5 className="text-lg font-semibold mb-5 text-red-600">Delete Account :</h5>
+
+                                    <p className="text-slate-400 mb-4">Do you want to delete the account? Please press below Delete button</p>
+
+                                    <Link href="#" className="btn bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white rounded-full">Delete</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Footer/>
+            </main>
+           <Switcher/> 
+        </div>
+            
+        </>
+    )
+}

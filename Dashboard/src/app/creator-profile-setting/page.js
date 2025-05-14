@@ -1,5 +1,5 @@
 'use client'
-import React,{ useState}  from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -9,19 +9,82 @@ const Topnav = dynamic(() => import('../components/topnav'))
 const Switcher = dynamic(() => import('../components/switcher'))
 const Footer = dynamic(() => import('../components/footer'))
 
-import {Facebook, Twitter, Instagram, Linkedin,Youtube} from 'react-feather'
+import {Facebook, Twitter, Instagram, Linkedin, Youtube} from 'react-feather'
 
 export default function CreatorProfileSetting(){
     const[toggle, setToggle] = useState(true)
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        occupation: '',
+        description: '',
+    });
 
-    const [file, setFile] = useState("/images/blog/single.jpg" );
+    const [file, setFile] = useState("/images/blog/single.jpg");
     const [profile, setProfile] = useState("/images/avatar/1.jpg")
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+
+    async function fetchUserData() {
+        try {
+            const res = await fetch('http://localhost:3001/api/auth/check', { 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await res.json();
+            if (data.loggedIn) {
+                setUser(data.user);
+                // Parse the username to set first and last name
+                const [firstName, ...lastNameParts] = (data.user.name || data.user.email || '').split(' ');
+                setFormData({
+                    firstName: firstName || '',
+                    lastName: lastNameParts.join(' ') || '',
+                    email: data.user.email || '',
+                    occupation: '',
+                    description: '',
+                });
+            } else {
+                window.location.href = 'http://localhost:3001/login';
+            }
+        } catch (err) {
+            console.error('Failed to fetch user:', err);
+            window.location.href = 'http://localhost:3001/login';
+        } finally {
+            setLoading(false);
+        }
+    }
 
     function handleChange(e) {
         setFile(URL.createObjectURL(e.target.files[0]));
     }
+
     function ProfileChange(e) {
         setProfile(URL.createObjectURL(e.target.files[0]))
+    }
+
+    const handleFormChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    if (loading) {
+        return (
+            <div className="page-wrapper toggled">
+                <div className="flex items-center justify-center h-screen">
+                    <div>Loading...</div>
+                </div>
+            </div>
+        );
     }
   
     return(
@@ -78,26 +141,26 @@ export default function CreatorProfileSetting(){
                                         <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
                                             <div>
                                                 <label className="form-label font-medium">First Name : <span className="text-red-600">*</span></label>
-                                                <input type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="First Name:" id="firstname" name="name" required=""/>
+                                                <input type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="First Name:" id="firstName" name="firstName" value={formData.firstName} onChange={handleFormChange} required=""/>
                                             </div>
                                             <div>
                                                 <label className="form-label font-medium">Last Name : <span className="text-red-600">*</span></label>
-                                                <input type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Last Name:" id="lastname" name="name" required=""/>
+                                                <input type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Last Name:" id="lastName" name="lastName" value={formData.lastName} onChange={handleFormChange} required=""/>
                                             </div>
                                             <div>
                                                 <label className="form-label font-medium">Your Email : <span className="text-red-600">*</span></label>
-                                                <input type="email" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Email" name="email" required=""/>
+                                                <input type="email" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Email" name="email" value={formData.email} onChange={handleFormChange} required=""/>
                                             </div>
                                             <div>
                                                 <label className="form-label font-medium">Occupation : </label>
-                                                <input name="name" id="occupation" type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Occupation :"/>
+                                                <input name="occupation" id="occupation" type="text" className="form-input w-full text-[15px] py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-full outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Occupation :" value={formData.occupation} onChange={handleFormChange}/>
                                             </div>
                                         </div>
 
                                         <div className="grid grid-cols-1">
                                             <div className="mt-5">
                                                 <label className="form-label font-medium">Description : </label>
-                                                <textarea name="comments" id="comments" className="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-2xl outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Message :"></textarea>
+                                                <textarea name="description" id="description" className="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-2xl outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 mt-2" placeholder="Message :" value={formData.description} onChange={handleFormChange}></textarea>
                                             </div>
                                         </div>
 
