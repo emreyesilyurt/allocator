@@ -262,7 +262,7 @@ export default function Topnav({setToggle, toggle}){
                                     <div className="flex items-end">
                                         <Image src="/images/client/05.jpg" width={40} height={40} className="rounded-full size-10 shadow dark:shadow-gray-700" alt=""/>
 
-                                        <span className="font-semibold text-[15px] ms-1">{userDetails?.name || "Guest"}</span>
+                                        <span className="font-semibold text-[15px] ms-1">{userDetails?.name || userDetails?.email || "Guest"}</span>
                                     </div>
                                 </div>
                             </div>
@@ -270,7 +270,11 @@ export default function Topnav({setToggle, toggle}){
                             <div className="mt-10 px-4">
                                 <h5 className="font-semibold text-[15px]">Wallet:</h5>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-[13px] text-slate-400">{userDetails?.wallet || "—"}</span>
+                                    <span className="text-[13px] text-slate-400">
+                                        {userDetails?.wallet && userDetails.wallet !== '0x0000000000000000000000000000000000000000' 
+                                            ? `${userDetails.wallet.slice(0, 6)}...${userDetails.wallet.slice(-4)}` 
+                                            : 'Not connected'}
+                                    </span>
                                     <Link href="#" className="text-violet-600"><BiWallet/></Link>
                                 </div>
                             </div>
