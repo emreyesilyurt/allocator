@@ -16,23 +16,43 @@ export default function Topnav({setToggle, toggle}){
     const [userData, setUserData] = useState(false);
     const [userDetails, setUserDetails] = useState(null);
 
+    // useEffect(() => {
+    //     fetchUser();
+        
+    //     let handlar = () => {
+    //         setNotification(false)
+    //     }
+    //     let user = () => {
+    //         setUserData(false)
+    //     }
+    //     document.addEventListener("mousedown", handlar)
+    //     document.addEventListener("mousedown", user)
+        
+    //     return () => {
+    //         document.removeEventListener("mousedown", handlar)
+    //         document.removeEventListener("mousedown", user)
+    //     }
+    // }, [])
     useEffect(() => {
-        fetchUser();
-        
-        let handlar = () => {
-            setNotification(false)
+    async function fetchUser() {
+        try {
+        const res = await fetch("http://localhost:3001/api/auth/check", {
+            credentials: "include"
+        });
+        if (res.ok) {
+            const data = await res.json();
+            setUserDetails(data);
+        } else {
+            setUserDetails(null);
         }
-        let user = () => {
-            setUserData(false)
+        } catch (err) {
+        console.error("Failed to fetch user:", err);
+        setUserDetails(null);
         }
-        document.addEventListener("mousedown", handlar)
-        document.addEventListener("mousedown", user)
-        
-        return () => {
-            document.removeEventListener("mousedown", handlar)
-            document.removeEventListener("mousedown", user)
-        }
-    }, [])
+    }
+
+    fetchUser();
+    }, []);
 
     async function fetchUser() {
         try {
@@ -262,7 +282,7 @@ export default function Topnav({setToggle, toggle}){
                                     <div className="flex items-end">
                                         <Image src="/images/client/05.jpg" width={40} height={40} className="rounded-full size-10 shadow dark:shadow-gray-700" alt=""/>
 
-                                        <span className="font-semibold text-[15px] ms-1">{userDetails?.name || userDetails?.email || "Guest"}</span>
+                                        <span className="font-semibold text-[15px] ms-1">{userDetails ? (userDetails.name || userDetails.email) : "Loading..."}</span>
                                     </div>
                                 </div>
                             </div>

@@ -120,117 +120,64 @@ export default function Navbar() {
                     </div>
                 </Link>
 
-                <div className="hidden lg:flex items-center space-x-6 mx-auto">
-                    <Link href="/aboutus" className="sub-menu-item text-sm font-medium">Services</Link>
-                    <Link href="/blogs" className="sub-menu-item text-sm font-medium">Learn</Link>
-                    <Link href="/contact" className="sub-menu-item text-sm font-medium">More</Link>
-                    <div className="form-icon relative">
-                        <LuSearch className="text-lg absolute top-1/2 -translate-y-1/2 left-3" />
-                        <input
-                            type="text"
-                            className="form-input w-44 ps-10 py-2 px-3 h-10 rounded-3xl outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 bg-white dark:bg-slate-900 text-sm"
-                            name="search"
-                            id="searchInput"
-                            placeholder="Search..."
-                        />
-                    </div>
-                </div>
+<div className="hidden lg:flex items-center space-x-6 mx-auto">
+                   <Link href="/aboutus" className="sub-menu-item text-sm font-medium">Services</Link>
+                   <Link href="/blogs" className="sub-menu-item text-sm font-medium">Learn</Link>
+                   <Link href="/contact" className="sub-menu-item text-sm font-medium">More</Link>
+                   <div className="form-icon relative">
+                       <LuSearch className="text-lg absolute top-1/2 -translate-y-1/2 left-3" />
+                       <input
+                           type="text"
+                           className="form-input w-44 ps-10 py-2 px-3 h-10 rounded-3xl outline-none border border-gray-200 focus:border-violet-600 dark:border-gray-800 dark:focus:border-violet-600 focus:ring-0 bg-white dark:bg-slate-900 text-sm"
+                           name="search"
+                           id="searchInput"
+                           placeholder="Search..."
+                       />
+                   </div>
+               </div>
 
-                <div className="flex items-center gap-4">
-                    {!loading && (
-                        <>
-                            {user ? (
-                                <>
-                                    <Link 
-                                        href="#" 
-                                        className="btn btn-icon btn-sm rounded-full inline-flex bg-violet-600 hover:bg-violet-700 border-violet-600 hover:border-violet-700 text-white"
-                                    >
-                                        <BiWallet className="w-4 h-4"/>
-                                    </Link>
+               <div className="flex items-center gap-4">
+                   {!loading && (
+                       <>
+                           {user ? (
+                               <>
+                                   {/* User is logged in - show dashboard link and logout */}
+                                   <Link
+                                       href="http://3.148.159.251:3000/dashboard"
+                                       className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
+                                   >
+                                       Dashboard
+                                   </Link>
 
-                                    <div className="relative">
-                                        <button
-                                            onClick={() => openDropdown(!isDropdown)}
-                                            className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 hover:bg-violet-700 text-white transition-colors"
-                                            type="button"
-                                        >
-                                            <FiUser className="w-5 h-5" />
-                                        </button>
+                                   <button
+                                       onClick={handleLogout}
+                                       className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors ml-2"
+                                   >
+                                       Logout
+                                   </button>
+                               </>
+                           ) : (
+                               <>
+                                   <Link
+                                       href="/login"
+                                       className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
+                                   >
+                                       Login
+                                   </Link>
 
-                                        <div className={`dropdown-menu absolute right-0 mt-4 w-56 rounded-md bg-white dark:bg-slate-900 shadow-lg z-50 ${isDropdown ? 'block' : 'hidden'}`}>
-                                            <div className="relative">
-                                                <div className="py-8 bg-gradient-to-tr from-violet-600 to-red-600" />
-                                                <div className="absolute px-4 -bottom-7 left-0">
-                                                    <div className="flex items-end">
-                                                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-600 text-white">
-                                                            <FiUser className="w-5 h-5" />
-                                                        </div>
-                                                        <span className="font-semibold text-[15px] ms-1">
-                                                            {user?.name || user?.email || "Guest"}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="mt-10 px-4">
-                                                <h5 className="font-semibold text-[15px]">Wallet:</h5>
-                                                <div className="flex items-center justify-between">
-                                                    <span className="text-[13px] text-slate-400">
-                                                        {user?.wallet && user.wallet !== '0x0000000000000000000000000000000000000000' 
-                                                            ? `${user.wallet.slice(0, 6)}...${user.wallet.slice(-4)}` 
-                                                            : 'Not connected'}
-                                                    </span>
-                                                    <Link href="#" className="text-violet-600"><AiOutlineCopy /></Link>
-                                                </div>
-                                            </div>
-
-                                            <div className="mt-4 px-4">
-                                                <h5 className="text-[15px]">Balance: <span className="text-violet-600 font-semibold">{user?.balance || "0.00 ETH"}</span></h5>
-                                            </div>
-
-                                            <ul className="py-2 text-start">
-                                                <li>
-                                                    <Link href="http://localhost:3000/creator-profile" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600">
-                                                        <AiOutlineUser className="text-[16px] mr-2" /> Profile
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link href="http://localhost:3000/creator-profile-setting" className="flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600">
-                                                        <MdOutlineSettings className="text-[16px] mr-2" /> Settings
-                                                    </Link>
-                                                </li>
-                                                <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
-                                                <li>
-                                                    <button onClick={handleLogout} className="w-full flex items-center text-[14px] font-semibold py-1.5 px-4 hover:text-violet-600 text-left">
-                                                        <LiaSignOutAltSolid className="text-[16px] mr-2" /> Logout
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <Link
-                                        href="/login"
-                                        className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
-                                    >
-                                        Login
-                                    </Link>
-
-                                    <Link
-                                        href="/signup"
-                                        className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
-                                    >
-                                        Sign Up
-                                    </Link>
-                                </>
-                            )}
-                        </>
-                    )}
-                </div>
-             
-            </div>
-        </nav>
-    );
+                                   <Link
+                                       href="/signup"
+                                       className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white rounded-full transition-colors"
+                                   >
+                                       Sign Up
+                                   </Link>
+                               </>
+                           )}
+                       </>
+                   )}
+               </div>
+            
+           </div>
+       </nav>
+   );
 }

@@ -1,22 +1,26 @@
-'use client'
-import React,{useEffect} from 'react'
-import Link from 'next/link'
-// import { animateScroll as scroll } from 'react-scroll';
-import {PiMoon} from "react-icons/pi"
-import {LiaSun} from "react-icons/lia"
+import React,{useState, useEffect} from 'react'
+import Link from 'next/link';
+import { animateScroll as scroll } from 'react-scroll';
+import {HiOutlineMoon,HiOutlineSun} from "react-icons/hi2"
+import {FiArrowUp} from "react-icons/fi"
+
 
 export default function Switcher() {
-    // const scrollToTop = () => {
-    //     scroll.scrollToTop({
-    //         duration: 500,
-    //         smooth: true,
-    //     });
-    // };
-    useEffect(() => {
-        if(typeof window !== 'undefined'){
-            window.scrollTo(0, 0)
-        }
-      }, [])
+
+   const [scrollTop, setScroll] = useState(true);
+
+   useEffect(() => {
+       window.addEventListener("scroll", () => {
+           setScroll(window.scrollY > 50);
+        });
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
     function changeMode(mode, event) {
         switch (mode) {
@@ -43,24 +47,18 @@ export default function Switcher() {
 
     return (
         <>
-            <div className="fixed top-[30%] -end-3 z-50">
+            <Link href="#" onClick={scrollToTop} id="back-to-top" className={`back-to-top  text-lg rounded-full z-10 bottom-5 end-5 size-9 text-center bg-violet-600 text-white leading-9  items-center flex justify-center ${scrollTop? "fixed": "hidden"}`}><FiArrowUp className='text-base'/></Link>
+
+            <div className="fixed top-[25%] -left-2 z-50">
                 <span className="relative inline-block rotate-90">
                     <input type="checkbox" className="checkbox opacity-0 absolute" id="chk" onClick={(event) => changeMode('mode', event)} />
                     <label className="label bg-slate-900 dark:bg-white shadow dark:shadow-gray-800 cursor-pointer rounded-full flex justify-between items-center p-1 w-14 h-8" htmlFor="chk">
-                        <PiMoon className="text-[20px] text-yellow-500"/>
-                        <LiaSun className="text-[20px] text-yellow-500"/>
+                        <HiOutlineMoon className="text-[20px] text-yellow-500"/>
+                        <HiOutlineSun className="text-[20px] text-yellow-500"/>
                         <span className="ball bg-white dark:bg-slate-900 rounded-full absolute top-[2px] left-[2px] size-7"></span>
                     </label>
                 </span>
             </div>
-
-            <div className="fixed top-[40%] -end-3 z-50">
-                <Link href="#" id="switchRtl">
-                    <span className="py-1 px-3 relative inline-block rounded-b-md -rotate-90 bg-white dark:bg-slate-900 shadow-md dark:shadow dark:shadow-gray-800 font-semibold rtl:block ltr:hidden" onClick={(event) => changeMode('layout', event)}>LTR</span>
-                    <span className="py-1 px-3 relative inline-block rounded-t-md -rotate-90 bg-white dark:bg-slate-900 shadow-md dark:shadow dark:shadow-gray-700 font-bold ltr:block rtl:hidden" onClick={(event) => changeMode('layout', event)}>RTL</span>
-                </Link>
-            </div>
-
         </>
     )
 }

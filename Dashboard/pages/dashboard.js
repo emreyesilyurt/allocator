@@ -1,18 +1,18 @@
+// Dashboard/pages/dashboard.js
 'use client'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 
-const Navbar = dynamic(() => import('./components/navbar'))
-const Topnav = dynamic(() => import('./components/topnav'))
-const Switcher = dynamic(() => import('./components/switcher'))
-const Footer = dynamic(() => import('./components/footer'))
-
-import TradingViewWidget from './components/TradingViewWidget';
+// Import components directly instead of using dynamic imports
+import Navbar from '../src/app/components/navbar'
+import Topnav from '../src/app/components/topnav'
+import Switcher from '../src/app/components/switcher'
+import Footer from '../src/app/components/footer'
+import TradingViewWidget from '../src/app/components/TradingViewWidget';
 import SimpleBarReact from "simplebar-react";
 
-import { data } from './data/data'
+import { data } from '../src/app/data/data'
 
 import { BiRightArrowAlt } from "react-icons/bi"
 import { PiBrowsers } from 'react-icons/pi';
@@ -20,7 +20,7 @@ import { LiaVolleyballBallSolid, LiaMusicSolid } from 'react-icons/lia'
 import { TbCameraPlus } from 'react-icons/tb'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 
-export default function Home() {
+export default function Dashboard() {
     const [toggle, setToggle] = useState(true)
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [user, setUser] = useState(null);
@@ -35,43 +35,33 @@ export default function Home() {
     const [productData, setProductData] = useState(filteredData);
 
     useEffect(() => {
-        // Get user data from middleware if available
+        // Get user data from authentication check
         async function initializeUser() {
             try {
-                // Check for user data in headers (set by middleware)
-                const headers = new Headers();
-                const userDataHeader = headers.get('x-user-data');
+                // Use the Dashboard's own auth check endpoint
+                const res = await fetch('/api/auth/check', { 
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    cache: 'no-store'
+                });
                 
-                if (userDataHeader) {
-                    const userData = JSON.parse(userDataHeader);
-                    setUser(userData);
-                    setLoading(false);
+                if (!res.ok) {
+                    throw new Error('Authentication failed');
+                }
+                
+                const data = await res.json();
+                
+                if (data.loggedIn && data.user) {
+                    setUser(data.user);
                 } else {
-                    // Fallback to API call
-                    const res = await fetch('http://localhost:3001/api/auth/check', { 
-                        credentials: 'include',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        cache: 'no-store'
-                    });
-                    
-                    const data = await res.json();
-                    
-                    if (data.loggedIn) {
-                        setUser(data.user);
-                    } else {
-                        // Only redirect if we're sure they're not authenticated
-                        setTimeout(() => {
-                            window.location.href = 'http://localhost:3001/login';
-                        }, 100);
-                    }
+                    // Redirect to landing page login
+                    window.location.href = 'http://3.148.159.251:3001/login';
                 }
             } catch (err) {
                 console.error('Failed to fetch user:', err);
-                setTimeout(() => {
-                    window.location.href = 'http://localhost:3001/login';
-                }, 100);
+                window.location.href = 'http://3.148.159.251:3001/login';
             } finally {
                 setLoading(false);
             }
@@ -137,11 +127,14 @@ export default function Home() {
         return (
             <div className="page-wrapper dark:bg-black toggled">
                 <div className="flex items-center justify-center h-screen">
-                    <div className="text-white">Loading...</div>
+                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-violet-600"></div>
                 </div>
             </div>
         );
     }
+
+    // Get display name - same logic as navbar
+    const displayName = user?.name || user?.username || user?.email?.split('@')[0] || "User";
 
     return (
         <>
@@ -156,13 +149,13 @@ export default function Home() {
                                 <div>
                                     <h5 className="font-semibold text-2xl mb-1">Welcome!</h5>
                                     <h5 className="font-medium text-base text-slate-400">
-                                        {user?.name || user?.email || "User"}
+                                        {displayName}
                                     </h5>
                                 </div>
                                 <span className="text-slate-400">
                                     My balance: 
                                     <span className="font-semibold text-emerald-600">
-                                        {user?.balance || "0.00 ETH"}
+                                        {" " + (user?.balance || "0.00 ETH")}
                                     </span>
                                 </span>
                             </div>

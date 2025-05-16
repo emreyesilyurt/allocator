@@ -1,150 +1,94 @@
-'use client';
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from 'next/navigation';
-import SimpleBarReact from "simplebar-react";
-import 'simplebar-react/dist/simplebar.min.css';
-import { Airplay, Film, Wifi, Copy, Users, FileText, File, LogIn, Layers } from 'react-feather';
+"use client";
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Navbar() {
-    const [manu, setManu] = useState('');
-    const [subManu, setSubManu] = useState('');
-    const pathname = usePathname();
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-    useEffect(() => {
-        setManu(pathname);
-        setSubManu(pathname);
-        window.scrollTo(0, 0);
-        fetchUser();
-    }, [setManu, setSubManu]);
-
+  useEffect(() => {
     async function fetchUser() {
-        try {
-            const res = await fetch('/api/auth/check', { credentials: 'include' });
-            const data = await res.json();
-            if (data.loggedIn) {
-                setUser(data.user);
-            } else {
-                setUser(null);
-            }
-        } catch (err) {
-            setUser(null);
+      try {
+        const res = await fetch('/api/auth/check', {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        const data = await res.json();
+        
+        if (data.loggedIn) {
+          setUser(data.user);
+        } else {
+          // Redirect to login if not logged in
+          window.location.href = 'http://3.148.159.251:3001/login';
         }
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
     }
+    
+    fetchUser();
+  }, []);
 
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (res.ok) {
+        window.location.href = 'http://3.148.159.251:3001';
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  if (!user) {
     return (
-        <nav id="sidebar" className="sidebar-wrapper bg-white dark:bg-black">
-            <div className="sidebar-content">
-                <div className="sidebar-brand">
-                    <Link href="/">
-                        <Image src="/images/logo-dark.png" width={116} height={24} placeholder="empty" className="block dark:hidden" alt="" />
-                        <Image src="/images/logo-light.png" width={116} height={24} placeholder="empty" className="hidden dark:block" alt="" />
-                    </Link>
-                </div>
-                <SimpleBarReact style={{ height: "calc(100% - 70px)" }}>
-                    <ul className="sidebar-menu border-t dark:border-white/10 border-gray-100" data-simplebar style={{ height: "calc(100% - 70px)" }}>
-                        <li className={["", "/"].includes(manu) ? "active" : ""}>
-                            <Link href="/"><Airplay className="size-4 me-3" />Dashboard</Link>
-                        </li>
+      <div className="bg-black text-white px-6 py-4 flex justify-between items-center w-full">
+        <div className="text-xl font-bold">Allocator</div>
+        <div>Loading user data...</div>
+      </div>
+    );
+  }
 
-                        <li className={`sidebar-dropdown ${["/explore", "/item-detail", "/upload-work"].includes(manu) ? "active" : ""}`}>
-                            <Link href="#" onClick={(e) => { setSubManu(subManu === "/explore-item" ? "" : "/explore-item") }}><Film className="size-4 me-3" />Explore Items</Link>
-                            <div className={`sidebar-submenu ${["/explore", "/item-detail", "/upload-work", "/explore-item"].includes(subManu) ? "block" : ""}`}>
-                                <ul>
-                                    <li className={manu === "/explore" ? "active" : ""}><Link href="/explore">Explore</Link></li>
-                                    <li className={manu === "/item-detail" ? "active" : ""}><Link href={`/item-detail`}>Item Detail</Link></li>
-                                    <li className={manu === "/upload-work" ? "active" : ""}><Link href="/upload-work">Upload Item</Link></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li className={manu === "/auction" ? "active" : ""}>
-                            <Link href="/auction"><Film className="size-4 me-3" />Live Auction</Link>
-                        </li>
-
-                        <li className={manu === "/wallet" ? "active" : ""}>
-                            <Link href="/wallet"><Wifi className="size-4 me-3" />Connect Wallet</Link>
-                        </li>
-
-                        <li className={manu === "/collection" ? "active" : ""}>
-                            <Link href="/collection"><Copy className="size-4 me-3" />Collections</Link>
-                        </li>
-
-                        <li className={`sidebar-dropdown ${["/creators", "/creator-profile", "/creator-profile-setting", "/become-creator"].includes(manu) ? "active" : ""}`}>
-                            <Link href="#" onClick={(e) => { setSubManu(subManu === "/creator-item" ? "" : "/creator-item") }}><Users className="size-4 me-3" />Creators</Link>
-                            <div className={`sidebar-submenu ${["/creators", "/creator-profile", "/creator-profile-setting", "/become-creator", "/creator-item"].includes(subManu) ? "block" : ""}`}>
-                                <ul>
-                                    <li className={manu === "/creators" ? "active" : ""}><Link href="/creators">Creators</Link></li>
-                                    <li className={manu === "/creator-profile" ? "active" : ""}><Link href="/creator-profile">Profile</Link></li>
-                                    <li className={manu === "/creator-profile-setting" ? "active" : ""}><Link href="/creator-profile-setting">Profile Setting</Link></li>
-                                    <li className={manu === "/become-creator" ? "active" : ""}><Link href="/become-creator">Become Creator</Link></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li className={`sidebar-dropdown ${["/blog", "/blog-detail"].includes(manu) ? "active" : ""}`}>
-                            <Link href="#" onClick={(e) => { setSubManu(subManu === "/blog-item" ? "" : "/blog-item") }}><FileText className="size-4 me-3" />Blog</Link>
-                            <div className={`sidebar-submenu ${["/blog", "/blog-detail", "/blog-item"].includes(subManu) ? "block" : ""}`}>
-                                <ul>
-                                    <li className={manu === "/blog" ? "active" : ""}><Link href="/blog">Blogs</Link></li>
-                                    <li className={manu === "/blog-detail" ? "active" : ""}><Link href="/blog-detail">Blog Detail</Link></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li className={`sidebar-dropdown ${["/starter", "/faqs", "/privacy", "/terms"].includes(manu) ? "active" : ""}`}>
-                            <Link href="#" onClick={(e) => { setSubManu(subManu === "/page-item" ? "" : "/page-item") }}><File className="size-4 me-3" />Pages</Link>
-                            <div className={`sidebar-submenu ${["/starter", "/faqs", "/privacy", "/terms", "/page-item"].includes(subManu) ? "block" : ""}`}>
-                                <ul>
-                                    <li className={manu === "/starter" ? "active" : ""}><Link href="/starter">Starter</Link></li>
-                                    <li className={manu === "/faqs" ? "active" : ""}><Link href="/faqs">FAQs</Link></li>
-                                    <li className={manu === "/privacy" ? "active" : ""}><Link href="/privacy">Privacy Policy</Link></li>
-                                    <li className={manu === "/terms" ? "active" : ""}><Link href="/terms">Term & Condition</Link></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li className={`sidebar-dropdown ${["/login", "/signup", "/signup-success", "/reset-password", "/lock-screen"].includes(manu) ? "active" : ""}`}>
-                            <Link href="#" onClick={(e) => { setSubManu(subManu === "/auth-item" ? "" : "/auth-item") }}><LogIn className="size-4 me-3" />Authentication</Link>
-                            <div className={`sidebar-submenu ${["/login", "/signup", "/signup-success", "/reset-password", "/lock-screen", "/auth-item"].includes(subManu) ? "block" : ""}`}>
-                                <ul>
-                                    <li className={manu === "/login" ? "active" : ""}><Link href="/login">Login</Link></li>
-                                    <li className={manu === "/signup" ? "active" : ""}><Link href="/signup">Signup</Link></li>
-                                    <li className={manu === "/signup-success" ? "active" : ""}><Link href="/signup-success">Signup Success</Link></li>
-                                    <li className={manu === "/reset-password" ? "active" : ""}><Link href="/reset-password">Reset Password</Link></li>
-                                    <li className={manu === "/lock-screen" ? "active" : ""}><Link href="/lock-screen">Lockscreen</Link></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li className={`sidebar-dropdown ${["/comingsoon", "/maintenance", "/error", "/thankyou"].includes(manu) ? "active" : ""}`}>
-                            <Link href="#" onClick={(e) => { setSubManu(subManu === "/error-item" ? "" : "/error-item") }}><Layers className="size-4 me-3" />Miscellaneous</Link>
-                            <div className={`sidebar-submenu ${["/comingsoon", "/maintenance", "/error", "/thankyou", "/error-item"].includes(subManu) ? "block" : ""}`}>|
-                                <ul>
-                                    <li className={manu === "/comingsoon" ? "active" : ""}><Link href="/comingsoon">Comingsoon</Link></li>
-                                    <li className={manu === "/maintenance" ? "active" : ""}><Link href="/maintenance">Maintenance</Link></li>
-                                    <li className={manu === "/error" ? "active" : ""}><Link href="/error">Error</Link></li>
-                                    <li className={manu === "/thankyou" ? "active" : ""}><Link href="/thankyou">Thank You</Link></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li className="relative lg:mx-8 lg:mt-8 mx-6 mt-6 p-6 rounded-lg bg-gradient-to-b to-transparent from-gray-50 dark:from-black text-center">
-                            <span className="relative z-10">
-                                <Image src="/images/creator.png" width={0} height={0} sizes="100vw" style={{ width: "100%", height: "auto" }} className="w-32 mx-auto" alt="" />
-                                <span className="text-lg font-semibold h5">Subscribe Now</span>
-
-                                <span className="text-white mt-3 mb-5 block">Get one month free and subscribe to pro</span>
-
-                                <Link href="https://1.envato.market/giglink-next" target="_blank" className="btn inline-block text-center bg-gray-100/5 hover:bg-gray-100 border-gray-100 dark:border-gray-100/5 hover:border-gray-100 text-slate-900 dark:text-white dark:hover:text-slate-900 rounded-md">Subscribe</Link>
-                            </span>
-                        </li>
-                    </ul>
-                </SimpleBarReact>
-
-            </div>
-        </nav>
-    )
+  return (
+    <nav className="bg-black text-white px-6 py-4 flex justify-between items-center w-full">
+      <div className="text-xl font-bold">Allocator</div>
+      
+      <div className="relative">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center space-x-2"
+        >
+          <span>{user.name || user.email}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </button>
+        
+        {isOpen && (
+          <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50">
+            <Link href="/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-700">
+              Dashboard
+            </Link>
+            <Link href="/profile" className="block px-4 py-2 text-sm hover:bg-gray-700">
+              Profile
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
 }

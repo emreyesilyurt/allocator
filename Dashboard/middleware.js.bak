@@ -1,73 +1,19 @@
-// Dashboard/middleware.js
 import { NextResponse } from 'next/server';
 
-export async function middleware(request) {
-    // Skip middleware for static files and api routes
-    if (
-        request.nextUrl.pathname.startsWith('/_next') ||
-        request.nextUrl.pathname.startsWith('/api') ||
-        request.nextUrl.pathname.startsWith('/images') ||
-        request.nextUrl.pathname.includes('.') ||
-        request.nextUrl.pathname === '/favicon.ico'
-    ) {
-        return NextResponse.next();
-    }
+export function middleware(request) {
+  const token = request.cookies.get('token')?.value;
 
-    try {
-        // Get the cookie from the request
-        const token = request.cookies.get('token');
-        
-        if (!token) {
-            // No token, redirect to login
-            return NextResponse.redirect('http://localhost:3001/login');
-        }
+  // Redirect to login if no token
+  if (!token) {
+    return NextResponse.redirect(new URL('http://localhost:3001/login', request.url));
+  }
 
-        // Token exists, let's verify it with the auth endpoint
-        const authCheckUrl = 'http://localhost:3001/api/auth/check';
-        const authResponse = await fetch(authCheckUrl, {
-            method: 'GET',
-            headers: {
-                'Cookie': `token=${token.value}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!authResponse.ok) {
-            throw new Error('Auth check failed');
-        }
-
-        const authData = await authResponse.json();
-
-        if (!authData.loggedIn) {
-            // Not authenticated, redirect to login
-            return NextResponse.redirect('http://localhost:3001/login');
-        }
-
-        // User is authenticated, allow access
-        const response = NextResponse.next();
-        
-        // Add the user data to the response headers so pages can access it
-        response.headers.set('x-user-data', JSON.stringify(authData.user));
-        
-        return response;
-    } catch (error) {
-        console.error('Auth middleware error:', error);
-        // On error, redirect to login
-        return NextResponse.redirect('http://localhost:3001/login');
-    }
+  return NextResponse.next();
 }
 
+// Apply middleware to all routes except public assets
 export const config = {
-    matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - api (API routes)
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         * - public folder
-         * - images folder
-         */
-        '/((?!api|_next/static|_next/image|favicon.ico|public|images).*)',
-    ],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+  ],
 };

@@ -1,0 +1,34 @@
+{
+  "name": "giglink",
+  "version": "1.2.0",
+  "description": "Giglink - Nextjs NFT Marketplace Template",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie": "^1.0.2",
+    "eslint-config-next": "14.2.11",
+    "feather-icons-react": "^0.6.2",
+    "jsonwebtoken": "^9.0.2",
+    "next": "^14.2.28",
+    "pg": "^8.15.6",
+    "react": "18.3.1",
+    "react-18-image-lightbox": "^5.1.4",
+    "react-dom": "18.3.1",
+    "react-feather": "^2.0.10",
+    "react-icons": "^5.3.0",
+    "react-modal-video": "^2.0.2",
+    "simplebar-react": "^3.2.6"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.11"
+  }
+}
